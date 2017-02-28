@@ -8,7 +8,12 @@ end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'devise'
+gem 'omniauth'
+gem 'omniauth-instagram', github: 'ropiku/omniauth-instagram'
+gem 'instagram'
 
+
+gem 'annotate'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
@@ -41,6 +46,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'pry-byebug'
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '~> 3.0.5'
