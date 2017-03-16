@@ -11,7 +11,7 @@ gem 'devise'
 gem 'omniauth'
 gem 'omniauth-instagram', github: 'ropiku/omniauth-instagram'
 gem 'instagram'
-
+gem 'aws-sdk', '~> 2.0'
 
 gem 'annotate'
 gem 'rails', '~> 5.0.1'

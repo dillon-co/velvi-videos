@@ -1,10 +1,11 @@
 class VideosController < ApplicationController
-  def index
+
+  def new
   end
 
   def show
   end
 
-  def new
-  end
+  def index
+  end      
 end
