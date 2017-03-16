@@ -155,10 +155,4 @@ class User < ApplicationRecord
     c = "rm -rf #{Rails.root.to_s}/public/videos/#{id}"
     `#{c}`
   end
-
-
-  ## TODO
-    # Create table 'Videos' that belongs_to User and create each 'output.mp4'
-    # with the video ID
-    # e.g. 'output3.mp4' where 3 is the video.id
 end
