@@ -252,7 +252,7 @@ Devise.setup do |config|
                               ENV['VELVI_VIDEO_INSTA_SECRET'],
                               scope: 'basic follower_list public_content',
                               setup: true,
-                              callback_url: 'http://localhost:3000/users/auth/facebook/callback'
+                              callback_url: 'http://velvi-videos.herokuapp.com/users/auth/facebook/callback'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
