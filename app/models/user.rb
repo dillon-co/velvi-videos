@@ -18,8 +18,7 @@
 #  provider               :string
 #  uid                    :string
 #
-require 'json'
-require 'ostruct'
+require 's3_store'
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
@@ -27,7 +26,6 @@ class User < ApplicationRecord
          :omniauthable, :omniauth_providers => [:instagram]
 
   has_many :videos
-
   after_create :create_video_dir
 
   def self.from_omniauth(auth)
@@ -113,10 +111,12 @@ class User < ApplicationRecord
   end
 
   def get_videos_and_add_them_together
+    create_video_dir
     get_videos_from_instagram
     add_videos_to_text_file
     create_video
     delete_videos
+    save_movies_to_bucket
   end
 
   def delete_videos
@@ -125,10 +125,22 @@ class User < ApplicationRecord
         File.delete(video)
       end
     end
-    # movie_list = open("#{video_folder}/movies.txt", "wb")
-    # movie_list.truncate(0)
+    movie_list = open("#{video_folder}/movies.txt", "wb")
+    movie_list.truncate(0)
   end
 
+  def save_movies_to_bucket
+    videos = Dir.glob("#{video_folder}/*.mp4").each do |v|
+      s3_store = S3Store.new(v)
+      s3_store.store
+      save_type_of_video_url(v, s3_store.url)
+    end
+  end
+
+  def save_type_of_video_url(video_string, s3_store_url)
+    v = video_string.split(".").first
+    v.split(/\d+/).length > 1 ? Video.find(v[/\d+/]).update(music_url: s3_store_url) : Video.find(v[/\d+/]).update(non_music_url: s3_store_url)
+  end
 
   def add_audio_to_video(video_id)
     c = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mp4"
