@@ -138,7 +138,7 @@ class User < ApplicationRecord
   end
 
   def save_type_of_video_url(video_string, s3_store_url)
-    v = video_string.split(".").first
+    v = video_string.split("/").last.split(".").first
     v.split(/\d+/).length > 1 ? Video.find(v[/\d+/]).update(music_url: s3_store_url) : Video.find(v[/\d+/]).update(non_music_url: s3_store_url)
   end
 
