@@ -8,6 +8,6 @@ class VideosController < ApplicationController
   end
 
   def index
-    @videos = Vieo.all
+    @videos = Video.all
   end
 end

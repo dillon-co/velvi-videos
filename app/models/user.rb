@@ -35,6 +35,15 @@ class User < ApplicationRecord
     end
   end
 
+  def get_videos_and_add_them_together
+    create_video_dir
+    get_videos_from_instagram
+    add_videos_to_text_file
+    create_video
+    delete_videos
+    save_movies_to_bucket
+  end
+
   def get_videos_from_instagram
     i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
@@ -108,15 +117,6 @@ class User < ApplicationRecord
     command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mp4"
     `#{command}`
     add_audio_to_video(vid.id)
-  end
-
-  def get_videos_and_add_them_together
-    create_video_dir
-    get_videos_from_instagram
-    add_videos_to_text_file
-    create_video
-    delete_videos
-    save_movies_to_bucket
   end
 
   def delete_videos
