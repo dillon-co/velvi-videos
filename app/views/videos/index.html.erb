@@ -1,3 +1,13 @@
 <%= video_tag '3/output19audio.mp4', controls: true %>
 
-<%#= link_to "Download", '/videos/3/output19audio.mpeg', download: 'filename' %>
+<% @videos.each do |video| %>
+  <div class="">
+    <h1>Video <%= video.id %></h1>
+    <h4>With Music</h4>
+    <%= video_tag video.music_url, controls: true %>
+    <h4>Without Music</h4>
+    <%= video_tag video.non_music_url, controls: true %>
+    <hr>
+  </div>
+
+<% end %>
