@@ -1,10 +1,10 @@
 <% @videos.each do |video| %>
   <div class="">
     <h1>Video <%= video.id %></h1>
-    <h4>With Music</h4>
-    <%= video_tag video.music_url, controls: true %>
+    <h4> Music</h4>
+    <a href="<%= video.music_url %>" download>Click here to download!</a>
     <h4>Without Music</h4>
-    <%= video_tag video.non_music_url, controls: true %>
+    <a href="<%= video.non_music_url %>" download>Click here to download!</a>
     <hr>
   </div>
 <% end %>

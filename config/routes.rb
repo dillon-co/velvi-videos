@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :videos
+  resources :videos # do
+    # get :download, on: :member
+  # end
 
   root to: 'pages#landing'
 
