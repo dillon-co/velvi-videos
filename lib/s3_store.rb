@@ -6,8 +6,7 @@ class S3Store
   end
 
   def store
-    @obj = @bucket.object(filename)
-    @obj.upload_file(@file)
+    @bucket.put_object({acl: "public-read", body: @file, key: filename})
     self
   end
 
