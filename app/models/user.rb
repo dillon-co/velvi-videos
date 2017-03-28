@@ -71,8 +71,8 @@ class User < ApplicationRecord
   end
 
   def save_videos_to_folder(videos)
-    videos.each do |video|
-      new_file_path = "#{video_folder}/#{video[:name]}.mp4"
+    videos.each_with_index do |video, i|
+      new_file_path = "#{video_folder}/video_#{i}.mp4"
       open(new_file_path, "wb") do |file|
         file.print open(video[:video_url]).read
       end
