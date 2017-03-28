@@ -59,8 +59,8 @@ class User < ApplicationRecord
   end
 
   def get_video_urls_titles_and_sizes(videos)
-    urls_titles_and_sizes = videos.map do |v|
-      { name: v["caption"]["text"].split(' ').join('_'),
+    urls_titles_and_sizes = videos.map.with_index do |v, i|
+      { name: "video_#{i}",
         video_url: v['videos']['standard_resolution']['url'],
         size: { width: v['videos']['standard_resolution']['width'].to_i,
                 height: v['videos']['standard_resolution']['height'].to_i
@@ -71,8 +71,8 @@ class User < ApplicationRecord
   end
 
   def save_videos_to_folder(videos)
-    videos.each_with_index do |video, i|
-      new_file_path = "#{video_folder}/video_#{i}.mp4"
+    videos.each do |video|
+      new_file_path = "#{video_folder}/#{video[:name]}.mp4"
       open(new_file_path, "wb") do |file|
         file.print open(video[:video_url]).read
       end
