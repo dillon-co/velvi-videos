@@ -1,4 +1,7 @@
-<% @videos.each do |video| %>
+<h1><%= link_to "Creat A Video", create_new_video_path, id: 'creatingVideoBtn' %></h1>
+<div class="container">  
+  <% if @videos != nil %>
+  <% @videos.each do |video| %>
   <div class="">
     <h1>Video <%= video.id %></h1>
     <h4> Music</h4>
@@ -7,4 +10,8 @@
     <a href="<%= video.non_music_url %>" download>Click here to download!</a>
     <hr>
   </div>
-<% end %>
+  <% end %>
+  <% else %>
+  <h1>You don't have any videos yet!</h1>
+  <% end %>
+</div>

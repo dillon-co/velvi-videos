@@ -12,4 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap-sprockets
 //= require_tree .
+
+
+// When the user clicks the button, open the modal
+// $(document).ready(function() {
+//   $("#creatingVideoBtn").click(function() {
+//       $('.modal').style.display = "block";
+//   });
+// });

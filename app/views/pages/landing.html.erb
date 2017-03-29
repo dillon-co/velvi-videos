@@ -1,3 +1,30 @@
-<h1>Pages#landing</h1>
-<p>Find me in app/views/pages/landing.html.erb</p>
-<%= link_to "Sign in with Instagram", user_instagram_omniauth_authorize_path %>
+<div class='container'>
+  <% unless user_signed_in? %>
+    <%= link_to "Sign in with Instagram", user_instagram_omniauth_authorize_path %>
+  <% else %>
+    <h3><%= link_to "Check out your videos", videos_path %></h3>
+    <h1> <%= link_to "Create A New Video", create_new_video_path, id: 'createVideoBtn' %> </h1>
+  <% end %>
+  <div class="modal fade" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class='container loader'></div>
+          <div class="c">
+            <h4>One moment while we build your video</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- , {'data-target' => "#myModal1", 'data-toggle' => "modal"} -->
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#createVideoBtn").click(function() {
+        console.log("Im working")
+          $('#myModal').modal("show");
+      });
+    });
+
+</script>
