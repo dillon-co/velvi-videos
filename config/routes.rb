@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  post 'stripe_checkout' => 'subscriptions#stripe_checkout', as: :stripe_checkout
+
+  get 'subscriptions/plans'
+
+  get 'subscriptions/index'
+
   resources :videos # do
     # get :download, on: :member
   # end
