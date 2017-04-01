@@ -7,7 +7,7 @@ class S3Store
 
   def store
     @obj = @bucket.object(filename)
-    @obj.upload_file(@file, acl: 'public-read')
+    @obj.upload_file(@file, acl: 'public-read', content_type: 'video/mp4')
     self
   end
 
