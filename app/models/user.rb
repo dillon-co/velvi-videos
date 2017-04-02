@@ -36,6 +36,7 @@ class User < ApplicationRecord
   end
 
   def get_videos_and_add_them_together
+    remove_video_dir
     create_video_dir
     get_videos_from_instagram
     add_videos_to_text_file

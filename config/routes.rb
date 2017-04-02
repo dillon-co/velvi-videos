@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   get 'subscriptions/index'
 
+  get 'privacy-policy' => 'pages#privacy', as: :privacy_policy
+
   resources :videos # do
     # get :download, on: :member
   # end
