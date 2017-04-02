@@ -104,7 +104,7 @@ class User < ApplicationRecord
 
   def add_videos_to_text_file
     movie_file = open(movie_text_file, "wb")
-    Dir.glob("#{video_folder}/*.mp4").each do |video|
+    Dir.glob("#{video_folder}/*.mp4").reverse.each do |video|
       if video.split('/').last.split('_').length > 1
         movie_file.write("file '#{video.split('/').last}'")
         movie_file.write("\n")
