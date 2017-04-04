@@ -61,7 +61,7 @@ class User < ApplicationRecord
 
   def get_video_urls_titles_and_sizes(videos)
     urls_titles_and_sizes = videos.map.with_index do |v, i|
-      { name: "video_#{i}",
+      { name: "video#{i}",
         video_url: v['videos']['standard_resolution']['url'],
         size: { width: v['videos']['standard_resolution']['width'].to_i,
                 height: v['videos']['standard_resolution']['height'].to_i
@@ -85,14 +85,14 @@ class User < ApplicationRecord
       video_path = "#{video_folder}/#{video[:name]}.mp4"
       output_video = "#{video_folder}/output_#{video[:name]}.mp4"
       video_placement = calculate_padding_placement(video)
-      run_size_and_padding_command = "ffmpeg -i #{video_path} -vf 'scale=-1:360, pad=640:360:#{video_placement}:0:black' #{output_video}"
+      #  1137.777 is the video scaled uo if the video happens to be 640 X 640
+      run_size_and_padding_command = "ffmpeg -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
       `#{run_size_and_padding_command}`
       File.delete(video_path)
     end
   end
 
   def calculate_padding_placement(video)
-    puts "\n\n\n\n#{video[:size]}\n\n\n\n"
     if video[:size][:width] == "360" && video[:size][:height] == 640
       return 0
     else
