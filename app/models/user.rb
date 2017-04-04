@@ -92,6 +92,7 @@ class User < ApplicationRecord
   end
 
   def calculate_padding_placement(video)
+    puts video[:size]
     if video[:size][:width] == "360" && video[:size][:height] == 640
       return 0
     else
@@ -104,7 +105,7 @@ class User < ApplicationRecord
 
   def add_videos_to_text_file
     movie_file = open(movie_text_file, "wb")
-    Dir.glob("#{video_folder}/*.mp4").reverse.each do |video|
+    Dir.glob("#{video_folder}/*.mp4").each do |video|
       if video.split('/').last.split('_').length > 1
         movie_file.write("file '#{video.split('/').last}'")
         movie_file.write("\n")
