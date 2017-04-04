@@ -96,9 +96,9 @@ class User < ApplicationRecord
     if video[:size][:width] == "360" && video[:size][:height] == 640
       return 0
     else
-      scaler = 360.0 / video[:size][:height].to_f
+      scaler = 640.0 / video[:size][:height].to_f
       video_width = video[:size][:width] * scaler
-      pad_size = (640 - video_width) / 2
+      pad_size = (1138 - video_width) / 2
       return pad_size
     end
   end
