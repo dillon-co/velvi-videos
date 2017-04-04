@@ -92,7 +92,7 @@ class User < ApplicationRecord
   end
 
   def calculate_padding_placement(video)
-    puts video[:size]
+    puts "\n\n\n\n#{video[:size]}\n\n\n\n"
     if video[:size][:width] == "360" && video[:size][:height] == 640
       return 0
     else
