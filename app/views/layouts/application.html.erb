@@ -9,8 +9,12 @@
   </head>
 
   <body>
+    <%= render 'layouts/nav' %>
     <%= yield %>
   </body>
 
-  <footer> <%= link_to "Privacy Policy", privacy_policy_path %> </footer>
+  <footer>
+    <div class="container">
+      <%= link_to "Privacy Policy", privacy_policy_path %> </footer>
+    </div>
 </html>

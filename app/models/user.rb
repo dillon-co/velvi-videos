@@ -36,11 +36,10 @@ class User < ApplicationRecord
   end
 
   def get_videos_and_add_them_together
-    remove_video_dir
     create_video_dir
     get_videos_from_instagram
     add_videos_to_text_file
-    create_video
+    add_videos_together_with_music
     delete_videos
     save_movies_to_bucket
   end
@@ -48,7 +47,7 @@ class User < ApplicationRecord
   def get_videos_from_instagram
     i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
-    data = JSON.parse(client_attributes.data.to_json, object_class: OpenStruct)
+    data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
     save_and_resize(videos)
   end
@@ -85,7 +84,6 @@ class User < ApplicationRecord
       video_path = "#{video_folder}/#{video[:name]}.mp4"
       output_video = "#{video_folder}/output_#{video[:name]}.mp4"
       video_placement = calculate_padding_placement(video)
-      #  1137.777 is the video scaled uo if the video happens to be 640 X 640
       run_size_and_padding_command = "ffmpeg -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
       `#{run_size_and_padding_command}`
       File.delete(video_path)
@@ -93,7 +91,7 @@ class User < ApplicationRecord
   end
 
   def calculate_padding_placement(video)
-    if video[:size][:width] == "360" && video[:size][:height] == 640
+    if video[:size][:width] == 640 && video[:size][:height] == 360
       return 0
     else
       scaler = 640.0 / video[:size][:height].to_f
@@ -114,7 +112,7 @@ class User < ApplicationRecord
     movie_file.close
   end
 
-  def create_video
+  def add_videos_together_with_music
     vid = videos.create(title: "#{Time.now.strftime("%m/%d/%Y")}-video")
     command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mp4"
     `#{command}`
@@ -162,6 +160,7 @@ class User < ApplicationRecord
   end
 
   def create_video_dir
+    remove_video_dir
     Dir.mkdir("#{video_folder}")
   end
 

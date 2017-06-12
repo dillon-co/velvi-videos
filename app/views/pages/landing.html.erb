@@ -1,15 +1,15 @@
 <div class='container'>
   <div class="jumbotron">
     <h1 style='font-size:80px'>Velvi Videos</h1>
-    <h3>beta</h3>
-    <h5>Get all the ladies with automatic instagram video compilation.</h5>
-    <h4>Redbull Sponsorship Included ;)</h4>
+    <!-- <h3>beta</h3> -->
+    <h5>Automatic video compilation.</h5>
+    <!-- <h6>Redbull Sponsorship Included ;)</h6> -->
   </div>
   <% unless user_signed_in? %>
     <%= link_to "Sign in with Instagram", user_instagram_omniauth_authorize_path %>
   <% else %>
     <h3><%= link_to "Check out your videos", videos_path %></h3>
-    <h1> <%= link_to "Create A New Video", create_new_video_path, id: 'createVideoBtn', class: 'btn btn-primary' %> </h1>
+    <h5><%= link_to "Create A New Video", current_user.money_in_account >= 9 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-primary' %> ~ $7.00 </h5>
   <% end %>
 
   <div class="modal fade" id="myModal">
