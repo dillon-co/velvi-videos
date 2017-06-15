@@ -1,16 +1,92 @@
-<div class='container'>
-  <div class="jumbotron">
+<div class=''>
+  <!-- <div class="jumbotron">
     <h1 style='font-size:80px'>Velvi Videos</h1>
-    <!-- <h3>beta</h3> -->
+
     <h5>Automatic video compilation.</h5>
-    <!-- <h6>Redbull Sponsorship Included ;)</h6> -->
-  </div>
-  <% unless user_signed_in? %>
-    <%= link_to "Sign in with Instagram", user_instagram_omniauth_authorize_path %>
-  <% else %>
-    <h3><%= link_to "Check out your videos", videos_path %></h3>
-    <h5><%= link_to "Create A New Video", current_user.money_in_account >= 9 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-primary' %> ~ $7.00 </h5>
-  <% end %>
+
+  </div> -->
+
+  <header class="header-image">
+    <div class="over-lay">
+
+        <div class="headline">
+            <div class="container">
+                <h1>Velvi</h1>
+                <h2>Automatic Video Compilation</h2>
+                <% unless user_signed_in? %>
+                  <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
+                <% else %>
+                  <h3><%= link_to "Check out your videos", videos_path %></h3>
+                  <h5><%= link_to "Create A New Video", current_user.money_in_account >= 7 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-primary' %> ~ $7.00 </h5>
+                <% end %>
+            </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <br class="featurette-divider">
+        <br class="featurette-divider">
+        <br class="featurette-divider">
+        <br class="featurette-divider">
+        <br class="featurette-divider">
+
+        <!-- First Featurette -->
+        <div class="featurette row" id="about">
+          <div class="col-sm-6 inner-text">
+            <h2 class="featurette-heading">Synch Your Instagram!</h2>
+
+          </div>
+          <div class="col-sm-6 text-center">
+            <!-- <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/100x100"> -->
+            <%= image_tag "http://www.freeiconspng.com/uploads/--in-blow-to-crafty-brand-odes-instagram-adopts-minimalist-new-logo-16.jpg", size:'150x150' %>
+          </div>
+            <!-- <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p> -->
+        </div>
+
+        <hr class="featurette-divider">
+
+        <!-- Second Featurette -->
+        <div class="featurette row text-center" id="services">
+          <div class="col-sm-6 ">
+            <%= image_tag "https://image.freepik.com/free-icon/video-camera_318-50337.jpg", size:'150x150' %>
+
+
+          </div>
+          <div class="col-sm-6 text-right inner-text">
+            <h2 class="featurette-heading">Create Your Video</h2>
+
+          </div>
+            <!-- <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p> -->
+        </div>
+
+        <hr class="featurette-divider">
+
+        <!-- Third Featurette -->
+        <div class="featurette row" id="contact">
+          <div class="col-sm-6 inner-text">
+            <h2 class="featurette-heading">Enjoy Yourself!</h2>
+
+          </div>
+          <div class="col-sm-6 text-center">
+            <!-- <img class="featurette-image img-circle img-responsive pull-right" src="http://placehold.it/100x100"> -->
+            <%= image_tag "http://icons.iconarchive.com/icons/iconsmind/outline/512/Happy-icon.png", size:'150x150' %>
+          </div>
+                <!-- <span class="text-muted">Will Seal the Deal.</span> -->
+            <!-- <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p> -->
+        </div>
+
+        <hr class="featurette-divider">
+        <div class="text-center">
+          <% unless user_signed_in? %>
+          <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
+          <% else %>
+          <h3><%= link_to "Check out your videos", videos_path %></h3>
+          <h5><%= link_to "Create A New Video", current_user.money_in_account >= 7 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-primary' %> ~ $7.00 </h5>
+          <% end %>
+        </div>
 
   <div class="modal fade" id="myModal">
     <div class="modal-dialog" role="document">
