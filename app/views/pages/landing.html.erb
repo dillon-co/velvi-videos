@@ -15,13 +15,13 @@
                 <% unless user_signed_in? %>
                   <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
                 <% else %>
-                  <h3><%= link_to "Check out your videos", videos_path %></h3>
-                  <h5><%= link_to "Create A New Video", current_user.money_in_account >= 7 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-primary' %> ~ $7.00 </h5>
+                  <h5><%= link_to "Create A New Video - $7.00", current_user.money_in_account >= 7 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-danger' %></h5>
                 <% end %>
             </div>
         </div>
       </div>
     </header>
+    <!-- <h3><%#= link_to "My Videos", videos_path %></h3> -->
 
     <!-- Page Content -->
     <div class="container">
