@@ -23,3 +23,7 @@
 //       $('.modal').style.display = "block";
 //   });
 // });
+
+setInterval(function() {
+    $.get("https://velvi-videos.herokuapp.com");
+}, 300000); // every 5 minutes (300000)
