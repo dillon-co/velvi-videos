@@ -14,9 +14,19 @@
 
  // @import "bootstrap-sprockets";
  @import "bootstrap";
+ h1{
+   font-family: 'Montserrat Alternates', sans-serif;
+ }
+ text{
+   font-family: 'Montserrat', sans-serif;
+ }
 
  .all-content{
    margin-top: -90px;
+ }
+
+ .main-title{
+   font-family: 'Montserrat Alternates', sans-serif;
  }
 
  .loader {
@@ -70,6 +80,7 @@
   .navbar-brand{
     font-size: 40px;
     font-weight: bold;
+    font-family: 'Montserrat Alternates', sans-serif;
   }
 }
 
@@ -109,8 +120,8 @@
 }
 
 .headline h2 {
-    font-size: 77px;
-    margin-top: 250px;
+    font-size: 70px;
+    margin-top: 320px;
     // background: #fff;
     // background: rgba(255,255,255,0.3);
 }
