@@ -1,0 +1,37 @@
+ruby-2.3.3 - #removing src/ruby-2.3.3 - please wait
+ruby-2.3.3 - #removing rubies/ruby-2.3.3 - please wait
+Searching for binary rubies, this might take some time.
+Found remote file https://rubies.travis-ci.org/osx/10.12/x86_64/ruby-2.3.3.tar.bz2
+Checking requirements for osx.
+Certificates in '/usr/local/etc/openssl/cert.pem' are already up to date.
+Requirements installation successful.
+ruby-2.3.3 - #configure
+ruby-2.3.3 - #download
+ruby-2.3.3 - #validate archive
+ruby-2.3.3 - #extract
+ruby-2.3.3 - #validate binary
+Checking requirements for osx.
+Certificates in '/usr/local/etc/openssl/cert.pem' are already up to date.
+Requirements installation successful.
+Installing Ruby from source to: /Users/dilloncortez/.rvm/rubies/ruby-2.3.3, this may take a while depending on your cpu(s)...
+ruby-2.3.3 - #downloading ruby-2.3.3, this may take a while depending on your connection...
+ruby-2.3.3 - #extracting ruby-2.3.3 to /Users/dilloncortez/.rvm/src/ruby-2.3.3 - please wait
+ruby-2.3.3 - #configuring - please wait
+ruby-2.3.3 - #post-configuration - please wait
+ruby-2.3.3 - #compiling - please wait
+ruby-2.3.3 - #installing - please wait
+ruby-2.3.3 - #making binaries executable - please wait
+ruby-2.3.3 - #downloading rubygems-2.6.12
+ruby-2.3.3 - #extracting rubygems-2.6.12 - please wait
+ruby-2.3.3 - #removing old rubygems - please wait
+ruby-2.3.3 - #installing rubygems-2.6.12 - please wait
+ruby-2.3.3 - #gemset created /Users/dilloncortez/.rvm/gems/ruby-2.3.3@global
+ruby-2.3.3 - #importing gemset /Users/dilloncortez/.rvm/gemsets/global.gems - please wait
+ruby-2.3.3 - #generating global wrappers - please wait
+ruby-2.3.3 - #gemset created /Users/dilloncortez/.rvm/gems/ruby-2.3.3
+ruby-2.3.3 - #importing gemsetfile /Users/dilloncortez/.rvm/gemsets/default.gems evaluated to empty gem list
+ruby-2.3.3 - #generating default wrappers - please wait
+ruby-2.3.3 - #adjusting #shebangs for (gem irb erb ri rdoc testrb rake).
+Install of ruby-2.3.3 - #complete 
+Ruby was built without documentation, to build it run: rvm docs generate-ri
+Making gemset ruby-2.3.3 pristine - please wait

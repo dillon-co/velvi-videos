@@ -5,7 +5,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+ruby "2.3.3", :engine => "rbx", :engine_version => "2.0.0.rc1"
 
+# http://velvi.io/users/auth/instagram/callback
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'devise'
 gem 'omniauth'
@@ -34,6 +36,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.5'
+# gem "ruby" 2.3.3p222
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
