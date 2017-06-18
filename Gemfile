@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-ruby "2.3.3", :engine => "rbx", :engine_version => "2.0.0.rc1"
+# ruby "2.3.3", :engine => "rbx", :engine_version => "2.0.0.rc1"
 
 # http://velvi.io/users/auth/instagram/callback
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
