@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# ruby "2.3.3", :engine => "rbx", :engine_version => "2.0.0.rc1"
+# ruby "2.3.3", :engine => 'jruby', :engine_version => "9.1.12.0"
 
 # http://velvi.io/users/auth/instagram/callback
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -16,10 +16,13 @@ gem 'instagram'
 gem 'aws-sdk', '~> 2.0'
 gem 'stripe'
 
+gem "parallel"
+
 gem 'annotate'
 gem 'rails', '~> 5.0.1'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 0.18'
+# gem 'activerecord-jdbcpostgresql-adapter'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # Use SCSS for stylesheets

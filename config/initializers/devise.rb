@@ -250,7 +250,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :instagram, ENV['VELVI_VIDEO_INSTA_ID'],
                               ENV['VELVI_VIDEO_INSTA_SECRET'],
-                              scope: 'basic follower_list public_content',
+                              scope: 'basic',
                               setup: true,
                               callback_url: 'http://www.velvi.io/users/auth/facebook/callback'
 

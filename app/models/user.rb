@@ -52,7 +52,7 @@ class User < ApplicationRecord
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
-    save_and_resize(videos)
+    save_and_resize(videos.first(15))
   end
 
   def save_and_resize(videos)
@@ -83,11 +83,13 @@ class User < ApplicationRecord
   end
 
   def resize_videos_with_padding(urls_titles_and_sizes)
-    urls_titles_and_sizes.each do |video|
+    counter = 0
+    Parallel.each(urls_titles_and_sizes, in_threads: 15) do |video|
+      puts counter += 1
       video_path = "#{video_folder}/#{video[:name]}.mp4"
       output_video = "#{video_folder}/output_#{video[:name]}.mp4"
       video_placement = calculate_padding_placement(video)
-      run_size_and_padding_command = "ffmpeg -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
+      run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
       `#{run_size_and_padding_command}`
       File.delete(video_path)
     end
