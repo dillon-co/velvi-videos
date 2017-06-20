@@ -84,9 +84,9 @@ class User < ApplicationRecord
 
   def resize_videos_with_padding(urls_titles_and_sizes)
     counter = 0
-    video_batches = [urls_titles_and_sizes[0..7], urls_titles_and_sizes[8..-1]]
-    video_batches.each do |batch|
-      Parallel.each(batch, in_threads: 8) do |video|
+    batch_size = 4
+    urls_titles_and_sizes.each_slice(batch_size) do |batch|
+      Parallel.each(batch, in_threads: batch_size) do |video|
         puts counter += 1
         video_path = "#{video_folder}/#{video[:name]}.mp4"
         output_video = "#{video_folder}/output_#{video[:name]}.mp4"
