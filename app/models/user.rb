@@ -84,14 +84,17 @@ class User < ApplicationRecord
 
   def resize_videos_with_padding(urls_titles_and_sizes)
     counter = 0
-    Parallel.each(urls_titles_and_sizes, in_threads: 7) do |video|
-      puts counter += 1
-      video_path = "#{video_folder}/#{video[:name]}.mp4"
-      output_video = "#{video_folder}/output_#{video[:name]}.mp4"
-      video_placement = calculate_padding_placement(video)
-      run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
-      `#{run_size_and_padding_command}`
-      File.delete(video_path)
+    video_batches = [urls_titles_and_sizes[0..7], urls_titles_and_sizes[8..-1]]
+    video_batches.each do |batch|
+      Parallel.each(batch, in_threads: 8) do |video|
+        puts counter += 1
+        video_path = "#{video_folder}/#{video[:name]}.mp4"
+        output_video = "#{video_folder}/output_#{video[:name]}.mp4"
+        video_placement = calculate_padding_placement(video)
+        run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
+        `#{run_size_and_padding_command}`
+        File.delete(video_path)
+      end
     end
   end
 
