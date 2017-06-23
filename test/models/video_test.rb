@@ -9,6 +9,7 @@
 #  updated_at    :datetime         not null
 #  music_url     :string
 #  non_music_url :string
+#  done_editing  :boolean          default(FALSE), not null
 #
 
 require 'test_helper'

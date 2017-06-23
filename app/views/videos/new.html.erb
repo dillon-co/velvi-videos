@@ -1,2 +1,74 @@
-<h1>Videos#new</h1>
-<p>Find me in app/views/videos/new.html.erb</p>
+<div class="container">
+  <h1>Comes With</h1>
+  <ul>
+    <li>Video with a song</li>
+    <li>Video with natural audio</li>
+  </ul>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card">
+        <div class="container">
+        <h3>Free Video</h3>
+        <ul>
+          <li>Small Logo In Bottom Left Corner</li>
+        </ul>
+        <br>
+      </div>
+        <button class='btn btn-success' id='createFreeVideoBtn'>Create A New Video - Free</button>
+      </div>
+    </div>
+    <div class="col-md-4 ">
+      <div class="card">
+        <div class="container">
+        <h3>Premium Video</h3>
+        <ul>
+          <li>No Logo!</li>
+        </ul>
+      </div>
+        <button class='btn btn-danger' id='createVideoBtn'>Create A New Video - $7</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $("#createVideoBtn").click(function() {
+        console.log("Im working")
+          $('#myModal').modal("show");
+          $.get(window.location.origin+'/create_new_video', {version: 'premium'}, function(data){
+            var vid_id = data['video_id']
+            setInterval(function(){
+                $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
+                  console.log(data['done_editing'])
+                  if(data['done_editing'] === true){
+                    window.location.href = '/videos/'+vid_id
+                  }
+                })
+             }, 3000);
+          })
+      });
+
+      $("#createFreeVideoBtn").click(function() {
+        console.log("Im working")
+          $('#myModal').modal("show");
+          $.get(window.location.origin+'/create_new_video',  {version: 'free'}, function(data){
+            var vid_id = data['video_id']
+            setInterval(function(){
+                $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
+                  console.log(data['done_editing'])
+                  if(data['done_editing'] === true){
+                    window.location.href = '/videos/'+vid_id
+                  }
+                })
+             }, 3000);
+          })
+      });
+    });
+
+</script>

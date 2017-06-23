@@ -20,8 +20,9 @@
 #  token                  :string
 #  money_in_account       :float            default(0.0)
 #
-
+# require 'video_creation_worker'
 require 's3_store'
+require 'aws-sdk'
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
@@ -38,6 +39,10 @@ class User < ApplicationRecord
     end
   end
 
+  def call_movie_creation_worker
+    VideoCreationWorker.perform_async(id)
+  end
+
   def get_videos_and_add_them_together
     create_video_dir
     get_videos_from_instagram
@@ -52,8 +57,11 @@ class User < ApplicationRecord
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
+    # binding.pry
     save_and_resize(videos.first(15))
+    # download_instagram_videos(videos.first(15))
   end
+
 
   def save_and_resize(videos)
     urls_titles_and_sizes = get_video_urls_titles_and_sizes(videos)
@@ -85,16 +93,14 @@ class User < ApplicationRecord
   def resize_videos_with_padding(urls_titles_and_sizes)
     counter = 0
     batch_size = 4
-    urls_titles_and_sizes.each_slice(batch_size) do |batch|
-      Parallel.each(batch, in_threads: batch_size) do |video|
-        puts counter += 1
-        video_path = "#{video_folder}/#{video[:name]}.mp4"
-        output_video = "#{video_folder}/output_#{video[:name]}.mp4"
-        video_placement = calculate_padding_placement(video)
-        run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
-        `#{run_size_and_padding_command}`
-        File.delete(video_path)
-      end
+    urls_titles_and_sizes.each do |video|
+      puts counter += 1
+      video_path = "#{video_folder}/#{video[:name]}.mp4"
+      output_video = "#{video_folder}/output_#{video[:name]}.mp4"
+      video_placement = calculate_padding_placement(video)
+      run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
+      `#{run_size_and_padding_command}`
+      File.delete(video_path)
     end
   end
 
@@ -121,10 +127,13 @@ class User < ApplicationRecord
   end
 
   def add_videos_together_with_music
-    vid = videos.create(title: "#{Time.now.strftime("%m/%d/%Y")}-video")
+    vid = videos.last
     command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mp4"
     `#{command}`
     add_audio_to_video(vid.id)
+    if vid.video_type == 'free'
+      add_watermark_to_video(vid.id)
+    end
   end
 
   def delete_videos
@@ -147,12 +156,24 @@ class User < ApplicationRecord
 
   def save_type_of_video_url(video_string, s3_store_url)
     v = video_string.split("/").last.split(".").first
-    v.split(/\d+/).length > 1 ? Video.find(v[/\d+/]).update(music_url: s3_store_url) : Video.find(v[/\d+/]).update(non_music_url: s3_store_url)
+    if v.split(/\d+/).length > 1
+      #check if file being saved to db is a movie with a song in the background
+      Video.find(v[/\d+/]).update(music_url: s3_store_url, done_editing: true)
+    else
+      Video.find(v[/\d+/]).update(non_music_url: s3_store_url)
+    end
   end
 
   def add_audio_to_video(video_id)
     c = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mp4"
     `#{c}`
+  end
+
+  def add_watermark_to_video(video_id)
+    music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}audio.mp4"
+    non_music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mp4"
+    `#{music_command}`
+    `#{non_music_command}`
   end
 
   def video_folder
@@ -167,6 +188,10 @@ class User < ApplicationRecord
     "#{video_folder}/movies.txt"
   end
 
+  def watermark
+    "#{Rails.root.to_s}/public/watermarks/rsz_1watermark.png"
+  end
+
   def create_video_dir
     remove_video_dir
     Dir.mkdir("#{video_folder}")
@@ -176,4 +201,90 @@ class User < ApplicationRecord
     c = "rm -rf #{Rails.root.to_s}/public/videos/#{id}"
     `#{c}`
   end
+
+
+
+##########################################################
+
+  # def create_users_movies
+  #   create_video_dir
+  #   get_videos_from_instagram
+  #   add_videos_together_from_bucket
+  # end
+  #
+  # def download_instagram_videos(videos)
+  #   urls_titles_and_sizes = get_video_urls_titles_and_sizes(videos)
+  #   save_clips_to_bucket(urls_titles_and_sizes)
+  # end
+  #
+  # def save_clips_to_bucket(urls_titles_and_sizes)
+  #   s3 = Aws::S3::Resource.new
+  #   bucket = s3.bucket('velvi-instagram-clips')
+  #   Parallel.each(urls_titles_and_sizes, in_threads: 15) do |v|
+  #     puts "downloading #{v[:name]}"
+  #     obj = bucket.object("#{id}/#{v[:name]}.mp4")
+  #     # File.open(v, 'rb') do |file|
+  #     obj.put(body: open(v[:video_url]).read, acl: "public-read")
+  #     # end
+  #   end
+  # end
+  # #
+  # def add_videos_together_from_bucket
+  #   transcoder = Aws::ElasticTranscoder::Client.new
+  #
+  #   input_videos = get_all_videos_from_bucket
+  #   presets = transcoder.create_preset(
+  #     name: "instagram resizing preset",
+  #     container: "mp4",
+  #     description: "Preset for stitching together all instagram videos",
+  #     video:{
+  #        max_width: "auto",
+  #        max_height: "auto",
+  #        sizing_policy: 'Fit',
+  #        padding_policy: 'Pad',
+  #        codec: 'H.264',
+  #        bit_rate: '192',
+  #        frame_rate: '30',
+  #        keyframes_max_dist: "30",
+  #        fixed_gop: "true",
+  #        codec_options: {
+  #          "Level": '3.1',
+  #          "MaxReferenceFrames": '16',
+  #          "Profile": 'high',
+  #         #  "key_frame_max_dist": "30",
+  #          "FixedGOP": "true",
+  #        },
+  #        display_aspect_ratio: '16:9'
+  #     },
+  #     thumbnails: {
+  #       format: "jpg",
+  #       interval: "20",
+  #       # resolution: "ThumbnailResolution",
+  #       # aspect_ratio: "AspectRatio",
+  #
+  #       max_width: "auto",
+  #       max_height: "auto",
+  #       padding_policy: 'Pad',
+  #       sizing_policy: "Fit"
+  #     })
+  #   j = transcoder.create_job(pipeline_id: '1497983016180-i9agda',
+  #   inputs: input_videos,
+  #   output: {
+  #      key: "full_output_video.mp4",
+  #      preset_id: presets[:preset][:id]
+  #   })
+  # end
+  #
+  # def get_all_videos_from_bucket
+  #   s3 = Aws::S3::Resource.new
+  #   titles = s3.bucket('velvi-instagram-clips').objects(prefix: "#{id}").map do |v|
+  #     {key: v.key, frame_rate: "auto",
+  #      resolution: "auto",
+  #      aspect_ratio: "auto",
+  #      interlaced: "auto",
+  #      container: "auto"}
+  #   end
+  #   titles
+  # end
+
 end

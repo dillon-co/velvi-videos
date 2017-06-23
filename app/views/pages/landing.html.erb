@@ -15,7 +15,14 @@
                 <% unless user_signed_in? %>
                   <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
                 <% else %>
-                  <h5><%= link_to "Create A New Video - $7.00", current_user.money_in_account >= 7 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-danger' %></h5>
+                  <% if current_user.money_in_account >= 7 %>
+                    <h5>
+                      <!-- <button class='btn btn-danger' id='createVideoBtn'>Create A New Video</button> -->
+                      <%= link_to 'Get Started', new_video_path, class: 'btn btn-danger' %>
+                    </h5>
+                  <% else %>
+                    <h5><%= link_to "Create A New Video - $7.00", new_charge_path, class: 'btn btn-danger' %></h5>
+                  <% end %>
                 <% end %>
             </div>
         </div>
@@ -115,7 +122,8 @@
         <div class="modal-body">
           <div class='container loader'></div>
           <div class="c">
-            <h4>One moment while we build your video</h4>
+            <h1>Building Your Video</h1>
+            <h4>This may take minute.</h4>
           </div>
         </div>
       </div>
@@ -123,12 +131,3 @@
   </div>
 </div>
   <!-- , {'data-target' => "#myModal1", 'data-toggle' => "modal"} -->
-<script type="text/javascript">
-    $(document).ready(function() {
-      $("#createVideoBtn").click(function() {
-        console.log("Im working")
-          $('#myModal').modal("show");
-      });
-    });
-
-</script>

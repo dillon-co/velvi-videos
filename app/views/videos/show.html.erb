@@ -1,2 +1,18 @@
-<h1>Videos#show</h1>
-<p>Find me in app/views/videos/show.html.erb</p>
+<div class="container">
+  <h3><%= @video.title.split('-').first %> Instagram Compilation</h3>
+  <div class="card">
+    <h1>Video With Song</h1>
+    <video width="1100" controls>
+      <source src="<%= @video.music_url %>" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <a href="<%= @video.music_url %>" class='btn btn-success' download>Download!</a>
+    <h1>Video With Natural Audio</h1>
+    <video width="1100" controls>
+      <source src="<%= @video.non_music_url %>" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <a href="<%= @video.non_music_url %>" class='btn btn-success' download>Download!</a>
+    <hr>
+  </div>
+</div>
