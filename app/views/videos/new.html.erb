@@ -54,7 +54,7 @@
       $("#createVideoBtn").click(function() {
         console.log("Im working")
           $('#myModal').modal("show");
-          $.get(window.location.origin+'/create_new_video', {version: 'premium'}, function(data){
+          $.get(window.location.origin+'/create_new_video', {version: 'paid'}, function(data){
             var vid_id = data['video_id']
             setInterval(function(){
                 $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
