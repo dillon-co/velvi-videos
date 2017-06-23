@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  mount Sidekiq::Web => '/sidekiq'
+
   root to: 'pages#landing'
 
   post 'stripe_checkout' => 'subscriptions#stripe_checkout', as: :stripe_checkout
