@@ -141,10 +141,10 @@ class User < ApplicationRecord
     else
       c = "ffmpeg -i #{video_folder}/output#{vid.id}.mpeg -vcodec copy -acodec copy #{video_folder}/output#{vid.id}.mp4"
       `#{c}`
-      File.delete("#{video_folder}/output#{vid.id}.mov")
     end
     puts "\n\n\nadding music\n\n\n"
     add_audio_to_video(vid.id)
+    File.delete("#{video_folder}/output#{vid.id}.mov")
   end
 
   def delete_videos
@@ -178,7 +178,7 @@ class User < ApplicationRecord
   end
 
   def add_audio_to_video(video_id)
-    c = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 #{video_folder}/output#{video_id}audio.mp4"
+    c = "ffmpeg -i #{video_folder}/output#{video_id}.mov -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 #{video_folder}/output#{video_id}audio.mp4"
     `#{c}`
   end
 
