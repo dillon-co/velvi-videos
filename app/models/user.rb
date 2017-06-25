@@ -83,7 +83,7 @@ class User < ApplicationRecord
 
   def save_videos_to_folder(videos)
     videos.each do |video|
-      new_file_path = "#{video_folder}/#{video[:name]}.mp4"
+      new_file_path = "#{video_folder}/#{video[:name]}.mpeg"
       open(new_file_path, "wb") do |file|
         file.print open(video[:video_url]).read
       end
@@ -95,8 +95,8 @@ class User < ApplicationRecord
     batch_size = 4
     urls_titles_and_sizes.each do |video|
       puts counter += 1
-      video_path = "#{video_folder}/#{video[:name]}.mp4"
-      output_video = "#{video_folder}/output_#{video[:name]}.mp4"
+      video_path = "#{video_folder}/#{video[:name]}.mpeg"
+      output_video = "#{video_folder}/output_#{video[:name]}.mpeg"
       video_placement = calculate_padding_placement(video)
       run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
       `#{run_size_and_padding_command}`
@@ -117,7 +117,7 @@ class User < ApplicationRecord
 
   def add_videos_to_text_file
     movie_file = open(movie_text_file, "wb")
-    Dir.glob("#{video_folder}/*.mp4").each do |video|
+    Dir.glob("#{video_folder}/*.mpeg").each do |video|
       if video.split('/').last.split('_').length > 1
         movie_file.write("file '#{video.split('/').last}'")
         movie_file.write("\n")
@@ -128,7 +128,7 @@ class User < ApplicationRecord
 
   def add_videos_together_with_music
     vid = videos.last
-    command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mp4"
+    command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mpeg"
     `#{command}`
     add_audio_to_video(vid.id)
     if vid.video_type == 'free'
@@ -137,7 +137,7 @@ class User < ApplicationRecord
   end
 
   def delete_videos
-    Dir.glob("#{video_folder}/*.mp4").each do |video|
+    Dir.glob("#{video_folder}/*.mpeg").each do |video|
       if video.split('/').last.split('_').length > 1
         File.delete(video)
       end
@@ -147,7 +147,7 @@ class User < ApplicationRecord
   end
 
   def save_movies_to_bucket
-    videos = Dir.glob("#{video_folder}/*.mp4").each do |v|
+    videos = Dir.glob("#{video_folder}/*.mpeg").each do |v|
       s3_store = S3Store.new(v)
       s3_store.store
       save_type_of_video_url(v, s3_store.url)
@@ -165,13 +165,13 @@ class User < ApplicationRecord
   end
 
   def add_audio_to_video(video_id)
-    c = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mp4"
+    c = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mpeg"
     `#{c}`
   end
 
   def add_watermark_to_video(video_id)
-    music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}audio.mp4"
-    non_music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mp4"
+    music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}audio.mpeg"
+    non_music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mpeg"
     `#{music_command}`
     `#{non_music_command}`
   end
@@ -222,7 +222,7 @@ class User < ApplicationRecord
   #   bucket = s3.bucket('velvi-instagram-clips')
   #   Parallel.each(urls_titles_and_sizes, in_threads: 15) do |v|
   #     puts "downloading #{v[:name]}"
-  #     obj = bucket.object("#{id}/#{v[:name]}.mp4")
+  #     obj = bucket.object("#{id}/#{v[:name]}.mpeg")
   #     # File.open(v, 'rb') do |file|
   #     obj.put(body: open(v[:video_url]).read, acl: "public-read")
   #     # end
@@ -235,7 +235,7 @@ class User < ApplicationRecord
   #   input_videos = get_all_videos_from_bucket
   #   presets = transcoder.create_preset(
   #     name: "instagram resizing preset",
-  #     container: "mp4",
+  #     container: "mpeg",
   #     description: "Preset for stitching together all instagram videos",
   #     video:{
   #        max_width: "auto",
@@ -270,7 +270,7 @@ class User < ApplicationRecord
   #   j = transcoder.create_job(pipeline_id: '1497983016180-i9agda',
   #   inputs: input_videos,
   #   output: {
-  #      key: "full_output_video.mp4",
+  #      key: "full_output_video.mpeg",
   #      preset_id: presets[:preset][:id]
   #   })
   # end
