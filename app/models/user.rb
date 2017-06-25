@@ -144,7 +144,7 @@ class User < ApplicationRecord
     end
     puts "\n\n\nadding music\n\n\n"
     add_audio_to_video(vid.id)
-    File.delete("#{video_folder}/output#{vid.id}.mov")
+    File.delete("#{video_folder}/output#{vid.id}.mpeg")
   end
 
   def delete_videos
