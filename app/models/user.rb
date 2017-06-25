@@ -178,7 +178,7 @@ class User < ApplicationRecord
   end
 
   def add_audio_to_video(video_id)
-    c = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 #{video_folder}/output#{video_id}audio.mp4"
+    c = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mp4"
     `#{c}`
   end
 
