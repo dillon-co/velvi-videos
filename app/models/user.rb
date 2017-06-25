@@ -45,10 +45,14 @@ class User < ApplicationRecord
 
   def get_videos_and_add_them_together
     create_video_dir
+    puts "\n\n\nDownloading videos\n\n\n"
     get_videos_from_instagram
+    puts "\n\n\nadding to text file\n\n\n"
     add_videos_to_text_file
+    puts "\n\n\nadding video together\n\n\n"
     add_videos_together_with_music
     delete_videos
+    puts "\n\n\nsaving movies\n\n\n"
     save_movies_to_bucket
   end
 
@@ -130,8 +134,10 @@ class User < ApplicationRecord
     vid = videos.last
     command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mpeg"
     `#{command}`
+    puts "\n\n\nadding music\n\n\n"
     add_audio_to_video(vid.id)
     if vid.video_type == 'free'
+      puts "\n\n\nadding watermark\n\n\n"
       add_watermark_to_video(vid.id)
     end
   end
