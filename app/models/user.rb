@@ -62,6 +62,7 @@ class User < ApplicationRecord
     data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
     # binding.pry
+    puts "saving and resizing"
     save_and_resize(videos.first(15))
     # download_instagram_videos(videos.first(15))
   end
@@ -86,7 +87,7 @@ class User < ApplicationRecord
   end
 
   def save_videos_to_folder(videos)
-    videos.each do |video|
+    Parallel.each(videos, in_threads: 15) do |video|
       new_file_path = "#{video_folder}/#{video[:name]}.mpeg"
       open(new_file_path, "wb") do |file|
         file.print open(video[:video_url]).read
@@ -134,12 +135,16 @@ class User < ApplicationRecord
     vid = videos.last
     command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mpeg"
     `#{command}`
-    puts "\n\n\nadding music\n\n\n"
-    add_audio_to_video(vid.id)
     if vid.video_type == 'free'
       puts "\n\n\nadding watermark\n\n\n"
       add_watermark_to_video(vid.id)
+    else
+      c = "ffmpeg -i #{video_folder}/output#{vid.id}.mpeg -vcodec copy -acodec copy #{video_folder}/output#{vid.id}.mp4"
+      `#{c}`
+      File.delete("#{video_folder}/output#{vid.id}.mov")
     end
+    puts "\n\n\nadding music\n\n\n"
+    add_audio_to_video(vid.id)
   end
 
   def delete_videos
@@ -153,9 +158,11 @@ class User < ApplicationRecord
   end
 
   def save_movies_to_bucket
-    videos = Dir.glob("#{video_folder}/*.mpeg").each do |v|
+    videos = Dir.glob("#{video_folder}/*.mp4").each do |v|
+      puts "\n\n\n\n\ngrabbing video #{v}\n\n\n\n\n"
       s3_store = S3Store.new(v)
       s3_store.store
+      puts "\n\n\n\n\nsaving video to database\n\n\n\n\n"
       save_type_of_video_url(v, s3_store.url)
     end
   end
@@ -171,15 +178,14 @@ class User < ApplicationRecord
   end
 
   def add_audio_to_video(video_id)
-    c = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mpeg"
+    c = "ffmpeg -i #{video_folder}/output#{video_id}.mp4 -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 #{video_folder}/output#{video_id}audio.mp4"
     `#{c}`
   end
 
   def add_watermark_to_video(video_id)
-    music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}audio.mpeg"
-    non_music_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mpeg"
-    `#{music_command}`
-    `#{non_music_command}`
+    # puts "skipping watermark for debugging"
+    watermark_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mp4"
+    `#{watermark_command}`
   end
 
   def video_folder
