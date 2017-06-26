@@ -15,14 +15,9 @@
                 <% unless user_signed_in? %>
                   <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
                 <% else %>
-                  <% if current_user.money_in_account >= 7 %>
                     <h5>
-                      <!-- <button class='btn btn-danger' id='createVideoBtn'>Create A New Video</button> -->
                       <%= link_to 'Get Started', new_video_path, class: 'btn btn-danger' %>
                     </h5>
-                  <% else %>
-                    <h5><%= link_to "Create A New Video - $7.00", new_charge_path, class: 'btn btn-danger' %></h5>
-                  <% end %>
                 <% end %>
             </div>
         </div>
@@ -64,6 +59,7 @@
         <!-- First Featurette -->
         <div class="featurette row" id="about">
           <div class="col-sm-6 inner-text">
+            <br>
             <h2 class="featurette-heading">Synch Your Instagram!</h2>
 
           </div>
@@ -84,7 +80,8 @@
 
           </div>
           <div class="col-sm-6 text-right inner-text">
-            <h2 class="featurette-heading">We'll Create Your Video</h2>
+            <br>
+            <h2 class="featurette-heading">With One Click, We'll Create Your Video</h2>
 
           </div>
             <!-- <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p> -->
@@ -95,6 +92,7 @@
         <!-- Third Featurette -->
         <div class="featurette row" id="contact">
           <div class="col-sm-6 inner-text">
+            <br>
             <h2 class="featurette-heading">Enjoy Your Movie!</h2>
 
           </div>
@@ -109,10 +107,11 @@
         <hr class="featurette-divider">
         <div class="text-center">
           <% unless user_signed_in? %>
-          <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
+            <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
           <% else %>
-          <h3><%= link_to "Check out your videos", videos_path %></h3>
-          <h5><%= link_to "Create A New Video", current_user.money_in_account >= 7 ? create_new_video_path : new_charge_path, id: 'createVideoBtn', class: 'btn btn-primary' %> ~ $7.00 </h5>
+              <h5>
+                <%= link_to 'Get Started', new_video_path, class: 'btn btn-danger' %>
+              </h5>
           <% end %>
         </div>
 
