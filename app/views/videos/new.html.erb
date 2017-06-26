@@ -1,16 +1,16 @@
 <div class="container">
   <h1>You're One Click Away!</h1>
-  <% if current_user.email.split("@").last == 'instagram.com' %>
+  <!-- <%# if current_user.email.split("@").last == 'instagram.com' %> -->
     <input type="text" name="email" value="" placeholder="Email" id='emailField'></input>
     <br>
     <div class="">
       <h4 id='emailWarning'></h4>
     </div>
-  <% else %>
+  <!-- <%# else %> -->
     <div class="" style='display:none;'>
       <h4 id='emailWarning'>current_user.email</h4>
     </div>
-  <% end %>
+  <!-- <%# end %> -->
   <br>
   <!-- <ul>
     <li>Video Compilation</li>
@@ -65,7 +65,8 @@
     $(document).ready(function() {
       $("#createVideoBtn").click(function() {
         var email = $("#emailField").val()
-        if(email != '' && email.split("@").length == 2 && email.split(".").length == 2){
+        // && email.split("@").length == 2 && email.split(".").length == 2
+        if(email != ''){
           var u_email = $("#emailField").val()
           console.log("Im working")
           $('#myModal').modal("show");
@@ -87,7 +88,8 @@
 
       $("#createFreeVideoBtn").click(function() {
         var email = $("#emailField").val()
-        if(email != '' && email.split("@").length == 2 && email.split(".").length == 2){
+        // && email.split("@").length == 2 && email.split(".").length == 2
+        if(email != ''){
           var u_email = $("#emailField").val()
           console.log("Im working")
           $('#myModal').modal("show");

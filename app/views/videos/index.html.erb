@@ -10,13 +10,13 @@
   <div class="card">
     <h1>Video <%= video.id %></h1>
     <video width="1100" controls>
-      <source src="<%#= video.non_music_url %>" type="video/mp4">
+      <source src="<%#= video.music_url %>" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
 
-   <!-- <h4> Music</h4> 
+   <h4> Music</h4>
     <a href="<%#= video.music_url %>" class='btn btn-success' download>Download!</a>
-    <h4>Without Music</h4> -->
+    <h4>Without Music</h4>
     <a href="<%= video.non_music_url %>" class='btn btn-success' download>Download!</a>
     <hr>
   </div>
