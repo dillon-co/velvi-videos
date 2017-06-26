@@ -1,9 +1,21 @@
 <div class="container">
   <h1>You're One Click Away!</h1>
-  <ul>
+  <% if current_user.email.split("@").last == 'instagram.com' %>
+    <input type="text" name="email" value="" placeholder="Email" id='emailField'></input>
+    <br>
+    <div class="">
+      <h4 id='emailWarning'></h4>
+    </div>
+  <% else %>
+    <div class="" style='display:none;'>
+      <h4 id='emailWarning'>current_user.email</h4>
+    </div>
+  <% end %>
+  <br>
+  <!-- <ul>
     <li>Video Compilation</li>
     <li>Video with a song (Coming Soon!)</li>
-  </ul>
+  </ul> -->
   <div class="row">
     <div class="col-md-4">
       <div class="card">
@@ -52,9 +64,12 @@
 <script type="text/javascript">
     $(document).ready(function() {
       $("#createVideoBtn").click(function() {
-        console.log("Im working")
+        var email = $("#emailField").val()
+        if(email != '' && email.split("@").length == 2 && email.split(".").length == 2){
+          var u_email = $("#emailField").val()
+          console.log("Im working")
           $('#myModal').modal("show");
-          $.get(window.location.origin+'/create_new_video', {version: 'paid'}, function(data){
+          $.get(window.location.origin+'/create_new_video', {version: 'paid', user_email: u_email}, function(data){
             var vid_id = data['video_id']
             setInterval(function(){
                 $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
@@ -65,12 +80,18 @@
                 })
              }, 3000);
           })
+        }else{
+            $("#emailWarning").text('You Need To Add A Valid Email First!')
+        }
       });
 
       $("#createFreeVideoBtn").click(function() {
-        console.log("Im working")
+        var email = $("#emailField").val()
+        if(email != '' && email.split("@").length == 2 && email.split(".").length == 2){
+          var u_email = $("#emailField").val()
+          console.log("Im working")
           $('#myModal').modal("show");
-          $.get(window.location.origin+'/create_new_video',  {version: 'free'}, function(data){
+          $.get(window.location.origin+'/create_new_video',  {version: 'free', user_email: u_email}, function(data){
             var vid_id = data['video_id']
             setInterval(function(){
                 $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
@@ -81,6 +102,9 @@
                 })
              }, 3000);
           })
+        }else{
+            $("#emailWarning").text('You Need To Add A Valid Email First!')
+        }
       });
     });
 

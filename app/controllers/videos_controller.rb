@@ -22,6 +22,7 @@ class VideosController < ApplicationController
   end
 
   def create_new_video
+    current_user.update(email: params[:user_email])
     vid = current_user.videos.create(title: "#{Time.now.strftime("%m/%d/%Y")}-video", video_type: params[:version])
     current_user.call_movie_creation_worker
     respond_to do |format|
