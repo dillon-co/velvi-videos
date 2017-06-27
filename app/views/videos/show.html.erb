@@ -3,10 +3,10 @@
   <div class="card">
     <h1>Video With Song</h1>
     <video width="1100" controls>
-      <source src="<%#= @video.music_url %>" type="video/mp4">
+      <source src="<%= @video.music_url %>" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
-    <a href="<%#= @video.music_url %>" class='btn btn-success' download>Download!</a>
+    <a href="<%= @video.music_url %>" class='btn btn-success' download>Download!</a>
     <h1>Video With Natural Audio</h1>
     <video width="1100" controls>
       <source src="<%= @video.non_music_url %>" type="video/mp4">
