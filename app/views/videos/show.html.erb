@@ -1,4 +1,12 @@
+
 <div class="container">
+  <br>
+  <div class='social-share'>
+    <h4 class='title'><strong>Share This Link!</strong></h4>
+    <a class="social-link facebook" href="" id="fb-share" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook"></i>Facebook</a>
+    <a class="social-link twitter" href="" id="tweet" rel="nofollow" target="_blank" title="Tweet this Page"><i class="fa fa-twitter"></i> Tweet</a>
+    <a class="social-link email" href="" id="email-share" title="Email to a Friend"><i class="fa fa-envelope"></i>Email</a>
+  </div><br>
   <h3><%= @video.title.split('-').first %> Instagram Compilation</h3>
   <div class="card">
     <h1>Video With Song</h1>
@@ -6,13 +14,73 @@
       <source src="<%= @video.music_url %>" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
+    <br>
+
+    <div class='social-share'>
+      <h4 class='title'><strong>Share This Link!</strong></h4>
+  	  <a class="social-link facebook" href="" id="fb-share" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook"></i>Facebook</a>
+  		<a class="social-link twitter" href="" id="tweet" rel="nofollow" target="_blank" title="Tweet this Page"><i class="fa fa-twitter"></i> Tweet</a>
+  		<a class="social-link email" href="" id="email-share" title="Email to a Friend"><i class="fa fa-envelope"></i>Email</a>
+    </div><br>
     <a href="<%= @video.music_url %>" class='btn btn-success' download>Download!</a>
     <h1>Video With Natural Audio</h1>
     <video width="1100" controls>
       <source src="<%= @video.non_music_url %>" type="video/mp4">
       Your browser does not support HTML5 video.
     </video>
+    <br>
+
+    <div class='social-share'>
+      <h4 class='title'><strong>Share This Link!</strong></h4>
+      <a class="social-link facebook" href="" id="fb-share" rel="nofollow" target="_blank" title="Share on Facebook"><i class="fa fa-facebook"></i>Facebook</a>
+  		<a class="social-link twitter" href="" id="tweet" rel="nofollow" target="_blank" title="Tweet this Page"><i class="fa fa-twitter"></i> Tweet</a>
+  		<a class="social-link email" href="" id="email-share" title="Email to a Friend"><i class="fa fa-envelope"></i>Email</a>
+    </div><br>
     <a href="<%= @video.non_music_url %>" class='btn btn-success' download>Download!</a>
     <hr>
   </div>
 </div>
+
+<script type="text/javascript">
+  jQuery(document).ready(function($){
+  function getFBShares(page){
+    var shares;
+    $.getJSON("http://graph.facebook.com/?ids=" + page, function(data){
+      if (data[page].shares > 1){
+        shares = data[page].shares;
+        $("#fb-share").append(" (" + shares + ")");
+      }
+    });
+  }
+  function getTweets(page){
+    var tweets;
+    $.getJSON("http://urls.api.twitter.com/1/urls/count.json?url=" + page + "&callback=?", function(data){
+      if (data.count > 1) {
+        tweets = data.count;
+        $("#tweet").append(" (" + tweets + ")");
+      }
+    });
+  }
+  function getLinkedIn(page){
+    var linkedinCount;
+    $.getJSON("http://www.linkedin.com/countserv/count/share?url=" + page + "&callback=?", function(data){
+      if (data.count > 1) {
+        linkedinCount = data.count;
+        $("#linkedin").append(" (" + linkedinCount + ")");
+      }
+    });
+  }
+
+  var Url = "https://www.velvi.io";
+  var UrlEncoded = encodeURIComponent(Url);
+  getFBShares(Url);
+  getTweets(Url);
+  getLinkedIn(Url);
+  document.getElementById("fb-share").href="http://www.facebook.com/share.php?u=" + UrlEncoded;
+  document.getElementById("tweet").href="http://twitter.com/home?status=Check out my instagram compilation! I made it with Velvi " + UrlEncoded;
+  document.getElementById("linkedin").href="http://www.linkedin.com/shareArticle?mini=true&url=" + UrlEncoded + "&title=velvi";
+  document.getElementById("gplus-share").href="https://plus.google.com/share?url=" + UrlEncoded;
+  document.getElementById("email-share").href="mailto:?body=Hey, out my instagram compilation! I made it with Velvi! \n " + Url;
+  });
+
+</script>
