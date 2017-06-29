@@ -57,7 +57,6 @@ class User < ApplicationRecord
   end
 
   def get_videos_from_instagram
-    # i = open("https://api.instagram.com/v1/users/1396439942/media/recent/?access_token=1396439942.c2a4a7a.86f2cc0d44f549b88cc442468844485b&count=40")
     i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
@@ -120,7 +119,7 @@ class User < ApplicationRecord
     else
       scaler = 640.0 / video[:size][:height].to_f
       video_width = video[:size][:width] * scaler
-      pad_size = (1138 - video_width) / 2
+      pad_size = (1140 - video_width) / 2
       return pad_size
     end
   end
