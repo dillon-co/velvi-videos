@@ -57,11 +57,10 @@ class User < ApplicationRecord
   end
 
   def get_videos_from_instagram
-    i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}")
+    i = open("https://api.instagram.com/v1/users/#{uid}/media/?access_token=#{token}&count=40")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
-    # binding.pry
     puts "saving and resizing"
     save_and_resize(videos.first(15))
     # download_instagram_videos(videos.first(15))
