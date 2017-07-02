@@ -6,6 +6,7 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
+    session[vid_id: params[:id]]
   end
 
   def index

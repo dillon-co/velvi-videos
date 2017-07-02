@@ -15,8 +15,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def google_oauth2
-    current_user.from_youtube(request.env['omniauth.auth']) == {vid_id: params[:vid_id]}
-    redirect_to video_path(params[:vid_id])
+    current_user.from_youtube(request.env['omniauth.auth'])
+    redirect_to video_path(session[:vid_id])
     flash[:success] = "Signed In To YoTube!"
   end
 
