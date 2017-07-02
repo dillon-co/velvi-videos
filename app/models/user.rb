@@ -68,7 +68,8 @@ class User < ApplicationRecord
   end
 
   def get_videos_from_instagram
-    i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
+    # i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
+    i = open("https://api.instagram.com/v1/users/28524776/media/recent/?access_token=28524776.c2a4a7a.4510a1a501c74f6ea051fd0fd599f5cf&count=40")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
@@ -84,30 +85,35 @@ class User < ApplicationRecord
 
 
   def save_and_resize(videos)
-    urls_titles_and_sizes = get_video_urls_titles_and_sizes(videos)
+    urls_titties_and_sizes = get_video_urls_titles_and_sizes(videos)
+    urls_titles_and_sizes = urls_titties_and_sizes.select {|obj| obj if obj[:video_url] != '' }
     save_videos_to_folder(urls_titles_and_sizes)
     resize_videos_with_padding(urls_titles_and_sizes)
   end
 
   def get_video_urls_titles_and_sizes(videos)
     urls_titles_and_sizes = videos.map.with_index do |v, i|
-      if v != nil
-        { name: "video#{i}",
-          video_url: v['videos']['standard_resolution']['url'],
-          size: { width: v['videos']['standard_resolution']['width'].to_i,
-                  height: v['videos']['standard_resolution']['height'].to_i
-                }
-        }
-      end
+      v != nil ? vid_url = v['videos']['standard_resolution']['url'] : vid_url = ""
+      v != nil ? wid = v['videos']['standard_resolution']['width'] : wid = '0'
+      v != nil ? hei = v['videos']['standard_resolution']['height'] : hei = '0'
+      { name: "video#{i}",
+        video_url: vid_url,
+        size: { width: wid,
+                height: hei
+              }
+      }
     end
     urls_titles_and_sizes
+
   end
 
   def save_videos_to_folder(videos)
     Parallel.each(videos, in_threads: 15) do |video|
-      new_file_path = "#{video_folder}/#{video[:name]}.mpeg"
-      open(new_file_path, "wb") do |file|
-        file.print open(video[:video_url]).read
+      if video[:video_url] != ''
+        new_file_path = "#{video_folder}/#{video[:name]}.mpeg"
+        open(new_file_path, "wb") do |file|
+          file.print open(video[:video_url]).read
+        end
       end
     end
   end
