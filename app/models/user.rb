@@ -43,6 +43,7 @@ class User < ApplicationRecord
   end
 
   def from_youtube(auth)
+    puts "\n\n\nAuth\n\n\n"
     self.update(youtube_uid: auth['uid'],
                 youtube_token: auth['credentials']['token'],
                 youtube_refresh_token: auth['credentials']['refresh_token'],

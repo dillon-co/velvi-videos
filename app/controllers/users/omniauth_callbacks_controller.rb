@@ -16,7 +16,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_oauth2
     current_user.from_youtube(request.env['omniauth.auth'])
-    redirect_to :back
+    redirect_to root_path
   end
 
   def failure
