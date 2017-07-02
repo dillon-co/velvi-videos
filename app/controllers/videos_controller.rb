@@ -17,7 +17,7 @@ class VideosController < ApplicationController
   def upload_confirmation
     video = Video.find(params[:vid_id])
     video.upload_to_youtube
-    redirect_to video_path(video), flash: "Success!"
+    redirect_to video_path(video), flash[:success] = "Success!"
   end
 
   def check_video_progress
