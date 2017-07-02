@@ -19,15 +19,18 @@
 #  uid                    :string
 #  token                  :string
 #  money_in_account       :float            default(0.0)
+#  youtube_uid            :string
+#  youtube_token          :string
+#  youtube_name           :string
 #
-# require 'video_creation_worker'
+
 require 's3_store'
 require 'aws-sdk'
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :omniauthable, :omniauth_providers => [:instagram]
+         :omniauthable, :omniauth_providers => [:instagram, :google_oauth2]
 
   has_many :videos
   after_create :create_video_dir
@@ -37,6 +40,13 @@ class User < ApplicationRecord
       user.email = "#{auth.info.nickname}@instagram.com"
       user.password = Devise.friendly_token[0,20]
     end
+  end
+
+  def from_youtube(auth)
+    self.update(youtube_uid: auth['uid'],
+                youtube_token: auth['credentials']['token'],
+                youtube_refresh_token: auth['credentials']['refresh_token'],
+                youtube_name: auth['info']['name'])
   end
 
   def call_movie_creation_worker

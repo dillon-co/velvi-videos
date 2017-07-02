@@ -248,11 +248,11 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :instagram, ENV['VELVI_VIDEO_INSTA_ID'],
-                              ENV['VELVI_VIDEO_INSTA_SECRET'],
-                              scope: 'basic',
-                              setup: true,
-                              callback_url: 'http://www.velvi.io/users/auth/facebook/callback'
+  # config.omniauth :instagram, ENV['VELVI_VIDEO_INSTA_ID'],
+  #                             ENV['VELVI_VIDEO_INSTA_SECRET'],
+  #                             scope: 'basic',
+  #                             setup: true,
+  #                             callback_url: 'http://www.velvi.io/users/auth/instagram/callback'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

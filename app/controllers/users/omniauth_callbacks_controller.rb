@@ -14,7 +14,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
+  def google_oauth2
+    current_user.from_youtube(request.env['omniauth.auth'])
+    redirect_to :back
+  end
+
   def failure
+    binding.pry
     redirect_to root_path
   end
   # You should also create an action method in this controller like this:

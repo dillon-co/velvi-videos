@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   get 'check_video_progress' => 'videos#check_video_progress'
 
+  # get "/auth/:action/callback", :controller => "omniauth_callbacks", :constraints => { :action => /instagram|youtube/ }
+
 
   devise_for :users, controllers: { :omniauth_callbacks => "users/omniauth_callbacks" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

@@ -11,10 +11,13 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'devise'
 gem 'omniauth'
+gem 'omniauth-google-oauth2'
 gem 'omniauth-instagram', github: 'ropiku/omniauth-instagram'
 gem 'instagram'
 gem 'aws-sdk', '~> 2.0'
 gem 'stripe'
+
+gem 'yt', '~> 0.28.0'
 
 gem 'sidekiq'
 gem "sidekiq-cron", "~> 0.4.0"

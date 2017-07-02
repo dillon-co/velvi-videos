@@ -19,6 +19,9 @@
 #  uid                    :string
 #  token                  :string
 #  money_in_account       :float            default(0.0)
+#  youtube_uid            :string
+#  youtube_token          :string
+#  youtube_name           :string
 #
 
 require 'test_helper'

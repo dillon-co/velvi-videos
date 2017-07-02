@@ -10,6 +10,9 @@
 #  music_url     :string
 #  non_music_url :string
 #  done_editing  :boolean          default(FALSE), not null
+#  video_type    :integer
+#  uid           :string
+#  description   :text
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
