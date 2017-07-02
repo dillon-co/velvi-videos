@@ -14,6 +14,12 @@ class VideosController < ApplicationController
     end
   end
 
+  def upload_confirmation
+    video = Video.find(params[:vid_id])
+    video.upload_to_youtube
+    redirect_to video_path(video)
+  end
+
   def check_video_progress
     vid = Video.find(params[:vid_id])
     respond_to do |format|

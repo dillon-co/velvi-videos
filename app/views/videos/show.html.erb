@@ -9,8 +9,15 @@
     <a class="social-link email" href="" id="email-share" title="Email to a Friend"><i class="fa fa-envelope"></i>Email</a>
   </div><br> -->
   <div class="social-share">
-    <h4 class='title'>Upload To YouTube!</h4>
-    <%= link_to "Here", user_google_oauth2_omniauth_authorize_path, class:'btn btn-danger' %>
+    <% if current_user == @video.user %>
+      <h4 class='title'>Upload To YouTube With One Click!</h4>
+      <% if current_user.youtube_uid == 'nil' %>
+        <%= link_to "Sign In With YouTube First", user_google_oauth2_omniauth_authorize_path(vid_id: @video.id), class:'btn btn-danger' %>
+      <% else %>
+        <%= link_to "One Click Upload!", upload_confirmation_path(vid_id: @video.id), class: 'btn btn-danger' %>
+      <% end %>
+
+    <% end %>
   </div>
   <h3><%= @video.title.split('-').first %> Instagram Compilation</h3>
   <div class="card">
