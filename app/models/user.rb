@@ -78,7 +78,6 @@ class User < ApplicationRecord
       videos << c_videos.first
     end
     puts "saving and resizing"
-    binding.pry
     save_and_resize(videos.first(15))
     # download_instagram_videos(videos.first(15))
   end
