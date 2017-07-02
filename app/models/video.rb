@@ -39,7 +39,7 @@ class Video < ApplicationRecord
     Yt.configuration.client_secret = ENV["VELVI_VIDEO_INSTA_SECRET"]
     account = Yt::Account.new(access_token: access_tokn)
     vid_type == 'music' ? vid = self.music_url : vid = self.non_music_url
-    puts "\n\n=====\n\n\nACCOUNT::::::>>>>>>>#{account}<<<<<<<<<<:::::::\n\n\n==============\n\n\n\n"
-    account.upload_video vid, temp_params
+    puts "\n\n=====\n\n\nACCOUNT::::::>>>>>>>#{account.access_token}<<<<<<<<<<:::::::\n\n\n==============\n\n\n\n"
+    # account.upload_video vid, temp_params
   end
 end
