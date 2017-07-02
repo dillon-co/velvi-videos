@@ -10,6 +10,7 @@ class VideosController < ApplicationController
   end
 
   def index
+    puts session
     if current_user.videos.present?
       @videos = current_user.videos.all
     end
