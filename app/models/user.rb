@@ -78,6 +78,7 @@ class User < ApplicationRecord
       videos << c_videos.first
     end
     puts "saving and resizing"
+    binding.pry
     save_and_resize(videos.first(15))
     # download_instagram_videos(videos.first(15))
   end
@@ -91,12 +92,14 @@ class User < ApplicationRecord
 
   def get_video_urls_titles_and_sizes(videos)
     urls_titles_and_sizes = videos.map.with_index do |v, i|
-      { name: "video#{i}",
-        video_url: v['videos']['standard_resolution']['url'],
-        size: { width: v['videos']['standard_resolution']['width'].to_i,
-                height: v['videos']['standard_resolution']['height'].to_i
-              }
-      }
+      if v != nil
+        { name: "video#{i}",
+          video_url: v['videos']['standard_resolution']['url'],
+          size: { width: v['videos']['standard_resolution']['width'].to_i,
+                  height: v['videos']['standard_resolution']['height'].to_i
+                }
+        }
+      end
     end
     urls_titles_and_sizes
   end
@@ -228,6 +231,7 @@ class User < ApplicationRecord
     c = "rm -rf #{Rails.root.to_s}/public/videos/#{id}"
     `#{c}`
   end
+
 
 
 
