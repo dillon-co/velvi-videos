@@ -6,11 +6,11 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
-    session[vid_id: params[:id]]
+    session[:vid_id] = params[:id]
   end
 
   def index
-    puts session
+    puts session[v]
     if current_user.videos.present?
       @videos = current_user.videos.all
     end
