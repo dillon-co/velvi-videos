@@ -40,6 +40,6 @@ class Video < ApplicationRecord
     account = Yt::Account.new(access_token: access_tokn)
     vid_type == 'music' ? vid = self.music_url : vid = self.non_music_url
     puts "\n\n=====\n\n\nACCOUNT::::::>>>>>>>#{account.access_token}<<<<<<<<<<:::::::\n\n\n==============\n\n\n\n"
-    # account.upload_video vid, temp_params
+    account.upload_video vid, temp_params
   end
 end

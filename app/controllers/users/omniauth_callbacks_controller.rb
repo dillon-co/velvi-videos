@@ -7,7 +7,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(request.env["omniauth.auth"])
     if @user.persisted?
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
-      set_flash_message(:notice, :success, :kind => "Instagram") if is_navigational_format?
+      flash[:success] = "Signed In With Instagram!"
     else
       session["devise.instagram_data"] = request.env["omniauth.auth"]
       redirect_to new_user_registration_url
@@ -17,6 +17,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     current_user.from_youtube(request.env['omniauth.auth'])
     redirect_to video_path(params[:vid_id])
+    flash[:success] = "Signed In To YoTube!"
   end
 
   def failure
