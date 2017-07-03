@@ -68,8 +68,7 @@ class User < ApplicationRecord
   end
 
   def get_videos_from_instagram
-    # i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
-    i = open("https://api.instagram.com/v1/users/28524776/media/recent/?access_token=28524776.c2a4a7a.4510a1a501c74f6ea051fd0fd599f5cf&count=40")
+    i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
     videos = data.select {|d| d if d["type"] == 'video'}
