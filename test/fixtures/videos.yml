@@ -13,6 +13,7 @@
 #  video_type    :integer
 #  uid           :string
 #  description   :text
+#  event_id      :integer
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

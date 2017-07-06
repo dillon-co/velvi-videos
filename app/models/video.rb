@@ -13,6 +13,7 @@
 #  video_type    :integer
 #  uid           :string
 #  description   :text
+#  event_id      :integer
 #
 
 class Video < ApplicationRecord

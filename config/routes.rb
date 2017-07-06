@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :events
   mount Sidekiq::Web => '/sidekiq'
 
   root to: 'pages#landing'

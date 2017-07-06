@@ -22,6 +22,7 @@
 #  youtube_uid            :string
 #  youtube_token          :string
 #  youtube_name           :string
+#  youtube_refresh_token  :string
 #
 
 require 's3_store'
@@ -33,6 +34,7 @@ class User < ApplicationRecord
          :omniauthable, :omniauth_providers => [:instagram, :google_oauth2]
 
   has_many :videos
+  has_many :events
   after_create :create_video_dir
 
   def self.from_omniauth(auth)
@@ -67,6 +69,19 @@ class User < ApplicationRecord
     save_movies_to_bucket
   end
 
+  def create_specific_video_for_user(tag)
+    create_video_dir
+    puts "\n\n\nDownloading videos\n\n\n"
+    get_certain_videos_from_instagram(tag)
+    puts "\n\n\nadding to text file\n\n\n"
+    add_videos_to_text_file
+    puts "\n\n\nadding video together\n\n\n"
+    add_videos_together_with_music
+    delete_videos
+    puts "\n\n\nsaving movies\n\n\n"
+    save_movies_to_bucket
+  end
+
   def get_videos_from_instagram
     i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
@@ -80,6 +95,20 @@ class User < ApplicationRecord
     puts "saving and resizing"
     save_and_resize(videos.first(15))
     # download_instagram_videos(videos.first(15))
+  end
+
+  def get_certain_videos_from_instagram(tag)
+    i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
+    client_attributes = OpenStruct.new(JSON.parse(i.read))
+    data = JSON.parse(client_attributes.data.to_json)
+    instagram_videos = data.select {|d| d if d["type"] == 'video'}
+    carousels = data.select {|d| d if d['type'] == 'carousel'}
+    carousels.each do |c|
+      c_videos = c.select{|m| m if m['type'] == 'video' }
+      instagram_videos << c_videos.first
+    end
+    vids = instagram_videos.select {|v| v if v != nil && v['tags'].include?(tag) }
+    save_and_resize(vids.first(15))
   end
 
 

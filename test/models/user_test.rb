@@ -22,6 +22,7 @@
 #  youtube_uid            :string
 #  youtube_token          :string
 #  youtube_name           :string
+#  youtube_refresh_token  :string
 #
 
 require 'test_helper'
