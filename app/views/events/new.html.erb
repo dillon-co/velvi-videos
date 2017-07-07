@@ -1,0 +1,15 @@
+<div class="container">
+  <h1>New Event</h1>
+  <%= form_for @event do |f| %>
+    <h4>
+      <%= f.label "Title" %><br>
+    </h4>
+    <%= f.text_field :title %><br><br>
+    <h4>
+      <%= f.label "Event Nick Name" %><br>
+    </h4>
+    <h6>This will be the code people use to opt in to the event.</h6>
+    <%= f.text_field :nick_name, maxlength: 5 %>
+
+  <% end %>
+</div>

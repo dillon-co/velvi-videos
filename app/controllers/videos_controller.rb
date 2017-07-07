@@ -10,7 +10,7 @@ class VideosController < ApplicationController
   end
 
   def index
-    puts session[v]
+    puts session[:vid_id]
     if current_user.videos.present?
       @videos = current_user.videos.all
     end

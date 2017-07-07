@@ -23,6 +23,7 @@
 #  youtube_token          :string
 #  youtube_name           :string
 #  youtube_refresh_token  :string
+#  event_nick_name        :string
 #
 
 require 'test_helper'

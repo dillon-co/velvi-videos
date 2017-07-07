@@ -23,6 +23,7 @@
 #  youtube_token          :string
 #  youtube_name           :string
 #  youtube_refresh_token  :string
+#  event_nick_name        :string
 #
 
 require 's3_store'
@@ -94,7 +95,6 @@ class User < ApplicationRecord
     end
     puts "saving and resizing"
     save_and_resize(videos.first(15))
-    # download_instagram_videos(videos.first(15))
   end
 
   def get_certain_videos_from_instagram(tag)
@@ -108,7 +108,7 @@ class User < ApplicationRecord
       instagram_videos << c_videos.first
     end
     vids = instagram_videos.select {|v| v if v != nil && v['tags'].include?(tag) }
-    save_and_resize(vids.first(15))
+    save_and_resize(vids)
   end
 
 

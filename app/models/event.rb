@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: events
+#
+#  id          :integer          not null, primary key
+#  title       :string
+#  nick_name   :string
+#  event_date  :datetime
+#  description :text
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
 class Event < ApplicationRecord
   belongs_to :user
   has_many :videos

@@ -23,6 +23,7 @@
 #  youtube_token          :string
 #  youtube_name           :string
 #  youtube_refresh_token  :string
+#  event_nick_name        :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
