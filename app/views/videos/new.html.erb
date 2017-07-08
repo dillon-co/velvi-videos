@@ -10,6 +10,11 @@
     <div class="" style='display:none;'>
       <h4 id='emailWarning'>current_user.email</h4>
     </div>
+    <div class="">
+      <% if current_user.youtube_uid == nil %>
+        <%= link_to "Sign In With YouTube First", user_google_oauth2_omniauth_authorize_path(), class:'btn btn-danger' %>
+      <% end %>
+    </div>
   <!-- <%# end %> -->
   <br>
   <!-- <ul>
