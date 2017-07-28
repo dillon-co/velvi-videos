@@ -1,28 +1,18 @@
 <div class="container">
+  <br>
   <h1>You're One Click Away!</h1>
   <!-- <%# if current_user.email.split("@").last == 'instagram.com' %> -->
-    <input type="text" name="email" value="" placeholder="Email" id='emailField'></input>
-    <br>
-    <div class="">
-      <h4 id='emailWarning'></h4>
-    </div>
   <!-- <%# else %> -->
-    <div class="" style='display:none;'>
+    <!-- <div class="" style='display:none;'>
       <h4 id='emailWarning'>current_user.email</h4>
-    </div>
-    <div class="">
-      <% if current_user.youtube_uid == nil %>
-        <%= link_to "Sign In With YouTube First", user_google_oauth2_omniauth_authorize_path(), class:'btn btn-danger' %>
-      <% end %>
-    </div>
-  <!-- <%# end %> -->
-  <br>
+    </div> -->
+  <br><br>
   <!-- <ul>
     <li>Video Compilation</li>
     <li>Video with a song (Coming Soon!)</li>
   </ul> -->
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-lg-4">
       <div class="card">
         <div class="container">
         <h3>Free Video</h3>
@@ -34,10 +24,13 @@
         <button class='btn btn-danger' id='createFreeVideoBtn'>One Click Video - Free</button>
       </div>
     </div>
-    <div class="col-md-4 ">
-      <div class="card">
+    <div class="col-lg-2" style='text-align:center'>
+        <h1>Or</h1>
+    </div>
+    <div class="col-lg-4 ">
+      <div class="card" style='margin-left:0px;'>
         <div class="container">
-        <h3>Premium Video</h3>
+        <h3>$7 - Premium Video </h3>
         <ul>
           <li>No Logo!</li>
         </ul>
@@ -47,9 +40,23 @@
     </div>
   </div>
 
+  <div class="">
+    <br><br>
+    <div class=" row">
+      <div class="col-sm-1">
+        <div class="newVidCheckBox">
+          <input type="checkbox" value="" id="newVidCheckBox" name="check" checked />
+          <label for="newVidCheckBox"></label>
+        </div>
+      </div>
+      <div class="col-sm-11">
+        <h5>Auto-Post To YouTube Because You're Awesome</h5>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="modal fade" id="myModal">
+<div class="modal" id="myModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
@@ -64,55 +71,119 @@
 </div>
 
 
+<% ['free', 'paid'].each do |modal_type| %>
+  <div class="modal fade" id="<%= modal_type %>youTubeModal" aria-hidden="true">
+    <div class="modal-dialog" role="">
+      <div class="modal-content">
+        <div class="modal-header">
+        </div>
+        <div class="modal-body">
+          <div class='container'></div>
+          <div class="" style='text-align:center'>
+            <h1>Auto-Post To YouTube</h1>
+            <div class="">
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  Sign In To YouTube
+                  <div class="card">
+                    <h5>I Want To Be Awesome</h5>
+                    <%= link_to "Be Awesome", user_google_oauth2_omniauth_authorize_path(), class:'btn btn-danger' %>
+                  </div>
+                </div>
+                <%= hidden_field_tag 'userEmail', current_user.email%>
+
+                <div class="col-md-6">
+                  <br>
+                  <div class="card">
+                    <h5>I Want To Be Lame</h5>
+                    <button type="button" id='lamoButton' class='btn btn-primary' name="button">Be Lame</button>
+                    <form id='<%= modal_type %>lamoForm' action="/action_page.php" hidden>
+                      Add Your Email: <input type="text" name="usremail" id='<%= modal_type %>usrEmailInput'><br>
+                      <input type="submit" value="Create My Video" class='btn btn-primary' id='<%= modal_type %>UsrEmailSubmit'>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
 
 
 <script type="text/javascript">
+
     $(document).ready(function() {
+
       $("#createVideoBtn").click(function() {
-        var email = $("#emailField").val()
-        // && email.split("@").length == 2 && email.split(".").length == 2
-        if(email != ''){
-          var u_email = $("#emailField").val()
-          console.log("Im working")
-          $('#myModal').modal("show");
-          $.get(window.location.origin+'/create_new_video', {version: 'paid', user_email: u_email}, function(data){
-            var vid_id = data['video_id']
-            setInterval(function(){
-                $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
-                  console.log(data['done_editing'])
-                  if(data['done_editing'] === true){
-                    window.location.href = '/videos/'+vid_id
-                  }
-                })
-             }, 3000);
-          })
-        }else{
-            $("#emailWarning").text('You Need To Add A Valid Email First!')
-        }
+        checkStuffThenCreateVideo('paid')
       });
 
       $("#createFreeVideoBtn").click(function() {
-        var email = $("#emailField").val()
-        // && email.split("@").length == 2 && email.split(".").length == 2
-        if(email != ''){
-          var u_email = $("#emailField").val()
-          console.log("Im working")
-          $('#myModal').modal("show");
-          $.get(window.location.origin+'/create_new_video',  {version: 'free', user_email: u_email}, function(data){
-            var vid_id = data['video_id']
-            setInterval(function(){
-                $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
-                  console.log(data['done_editing'])
-                  if(data['done_editing'] === true){
-                    window.location.href = '/videos/'+vid_id
-                  }
-                })
-             }, 3000);
-          })
-        }else{
-            $("#emailWarning").text('You Need To Add A Valid Email First!')
-        }
+        checkStuffThenCreateVideo('free')
       });
+
+      $("#lamoButton").click(function(){
+        document.getElementById('freelamoForm').removeAttribute("hidden");
+      });
+
+
+      $("#freelamoForm").on("submit", function(e){
+        e.preventDefault();
+        $('#freeyouTubeModal').modal("hide");
+        document.getElementById("newVidCheckBox").checked = false
+        checkStuffThenCreateVideo('free')
+      })
     });
+
+    function checkStuffThenCreateVideo(video_type){
+      var youtube_uid = <%= current_user.youtube_uid.present? %>
+      var checkBoxValue = document.getElementById("newVidCheckBox").checked
+      console.log(checkBoxValue)
+      if(checkBoxValue){
+        if (youtube_uid){
+          beginVideoCreation(video_type)
+        }else{
+          signInToYoutube(video_type)
+        }
+      }else{
+        beginVideoCreation(video_type)
+      }
+    }
+
+    function beginVideoCreation(video_type){
+      console.log("Im working")
+      var emailField = "#" + video_type + "usrEmailInput"
+      console.log(emailField)
+      if($(emailField).val() != 'nil'){
+        var u_email = $(emailField).val()
+      }else if($("#userEmail") != 'nil'){
+        var u_email = $("#userEmail").val()
+      };
+      $('#myModal').modal("show");
+      $.get(window.location.origin+'/create_new_video',  {version: video_type, user_email: u_email}, function(data){
+        var vid_id = data['video_id']
+        setInterval(function(){
+          $.get(window.location.origin+'/check_video_progress', {vid_id: vid_id}, function(data){
+            console.log(data['done_editing'])
+            if(data['done_editing'] === true){
+              window.location.href = '/videos/'+vid_id
+            }
+          });
+        }, 3000);
+      })
+    }
+
+    function signInToYoutube(video_type){
+      if(video_type == 'free'){
+        $('#freeyouTubeModal').modal("show");
+      }else{
+        $('#paidyouTubeModal').modal("show");
+      }
+    }
 
 </script>

@@ -1,0 +1,9 @@
+<% @c.each_slice(12) do |colors| %>
+  <div class="row">
+    <% colors.each do |color| %>
+      <div class="col-sm-1" style='background-color: <%= color %>; min-height:120px;border-radius:100px;'>
+
+      </div>
+    <% end %>
+  </div>
+<% end %>

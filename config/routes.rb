@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   resources :charges
 
+  get 'color_fun' => 'pages#color_fun', as: :color_fun_path
   # get 'charges/create' => 'charges#create', as: :create_new_charge
 
   get 'create_new_video' => 'videos#create_new_video', as: :create_new_video

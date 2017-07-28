@@ -14,6 +14,12 @@
 
  // @import "bootstrap-sprockets";
  @import "bootstrap";
+
+ $activeColor: #27ae60; //green
+ $darkenColor: darken($activeColor, 20%);
+ /* $background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/13460/dark_wall.png'); */
+ $background: #3498db;
+
  h1{
    font-family: 'Montserrat Alternates', sans-serif;
  }
@@ -50,28 +56,28 @@
    100% { transform: rotate(360deg); }
  }
 
- .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    padding-top: 100px; /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
+//  .modal {
+//     display: none; /* Hidden by default */
+//     position: fixed; /* Stay in place */
+//     z-index: 4; /* Sit on top */
+//     padding-top: 100px; /* Location of the box */
+//     left: 0;
+//     top: 0;
+//     width: 100%; /* Full width */
+//     height: 100%; /* Full height */
+//     overflow: auto; /* Enable scroll if needed */
+//     // background-color: rgb(0,0,0); /* Fallback color */
+//     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+// }
+//
+// /* Modal Content */
+// .modal-content {
+//     // background-color: #fefefe;
+//     margin: auto;
+//     padding: 20px;
+//     border: 1px solid #888;
+//     width: 80%;
+// }
 
 .navbar{
   background-color: rgba(0,0,0,0);
@@ -299,4 +305,51 @@ footer {
         margin-bottom: 10px;
         margin-left: 0;
     }
+}
+
+// Check Box
+
+.newVidCheckBox {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  background: #fcfff4;
+  // background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  border-radius: 50px;
+  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+  label {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    cursor: pointer;
+    background: linear-gradient(top, #222 0%, #45484d 100%);
+    border-radius: 50px;
+    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,1);
+    &:after {
+      content: '';
+      width: 15px;
+      height: 9px;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      border: 3px solid #fcfff4;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      // border-radius: 30px;
+      transform: rotate(-45deg);
+    }
+    &:hover::after {
+      opacity: 0.3;
+    }
+  }
+  input[type=checkbox] {
+    visibility: hidden;
+    &:checked + label:after {
+      opacity: 1;
+    }
+  }
 }

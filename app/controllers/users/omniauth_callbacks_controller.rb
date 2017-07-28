@@ -16,12 +16,15 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def google_oauth2
     current_user.from_youtube(request.env['omniauth.auth'])
-    redirect_to video_path(Video.find(session[:vid_id]))
-    flash[:success] = "Signed In To YoTube!"
+    if session[:vid_id] != nil
+      redirect_to video_path(Video.find(session[:vid_id]))
+    else
+      redirect_to new_video_path()
+    end
+    flash[:success] = "Signed In To YouTube!"
   end
 
   def failure
-    binding.pry
     redirect_to root_path
   end
   # You should also create an action method in this controller like this:
