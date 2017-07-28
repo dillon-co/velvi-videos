@@ -21,7 +21,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       redirect_to new_video_path()
     end
-    flash[:success] = "Signed In To YouTube!"
+    flash[:success] = "Signed In To YouTube! Now Click `One Click Video` To Create Your Video"
   end
 
   def failure
