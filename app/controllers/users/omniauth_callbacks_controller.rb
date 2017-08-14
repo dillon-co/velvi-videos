@@ -27,6 +27,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def failure
     redirect_to root_path
   end
+
+
+  # Model --Logic--> Controller --Variables--> Views
+
+
+
   # You should also create an action method in this controller like this:
   # def twitter
   # end
