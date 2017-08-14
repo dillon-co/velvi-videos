@@ -13,10 +13,10 @@
             <div class="container">
                 <h2 class='main-title'>Automatic Video Compilation</h2>
                 <% unless user_signed_in? %>
-                  <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger' %>
+                  <%= link_to "Get Started", user_instagram_omniauth_authorize_path, class:'btn btn-danger main-login-button' %>
                 <% else %>
                     <h5>
-                      <%= link_to 'Create Your Video!', new_video_path, class: 'btn btn-danger' %>
+                      <%= link_to 'Create Your Video!', new_video_path, class: 'btn btn-danger main-login-button' %>
                     </h5>
                 <% end %>
             </div>
