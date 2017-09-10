@@ -139,13 +139,20 @@ a:hover.email {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    @media(max-width:550px){
+    @media(min-width:1000px){
       .main-login-button{
         width: 500px;
         height: 70px;
         font-size: 35px;
       }
     }
+      // @media(min-width:1000px){
+      //   .main-login-button{
+      //     // width: 100%;
+      //     // height: 100%;
+      //     // font_size: 100%;
+      //   }
+      // }
     .over-lay{
       background: rgba(255,255,255,0.3);
       min-height: 777px;

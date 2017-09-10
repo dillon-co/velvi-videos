@@ -140,7 +140,7 @@ class User < ApplicationRecord
   def save_videos_to_folder(videos)
     Parallel.each(videos, in_threads: 15) do |video|
       if video[:video_url] != ''
-        new_file_path = "#{video_folder}/#{video[:name]}.mp4"
+        new_file_path = "#{video_folder}/#{video[:name]}.mpeg"
         open(new_file_path, "wb") do |file|
           file.print open(video[:video_url]).read
         end
