@@ -1,3 +1,11 @@
+<% content_for :meta do %>
+  <meta property="og:video" content="<%= @video.music_url %>">
+  <meta property="og:video:secure_url" content="<%= @video.music_url %>" />
+  <meta property="og:video:type" content="application/x-shockwave-flash" />
+  <meta property="og:video:width" content="400" />
+  <meta property="og:video:height" content="300" />
+<% end %>
+
 
 <div class="container">
   <% if @video.no_instagram_videos != true %>
@@ -91,14 +99,13 @@
     });
   }
 
-  var Url = "https://www.velvi.io";
+  var Url = "https://www.velvi.io/videos/<%= @video.id %>";
   var UrlEncoded = encodeURIComponent(Url);
   getFBShares(Url);
   getTweets(Url);
   getLinkedIn(Url);
   document.getElementById("fb-share").href="http://www.facebook.com/share.php?u=" + UrlEncoded;
   document.getElementById("tweet").href="http://twitter.com/home?status=Check out my instagram compilation! I made it with Velvi " + UrlEncoded;
-  document.getElementById("linkedin").href="http://www.linkedin.com/shareArticle?mini=true&url=" + UrlEncoded + "&title=velvi";
   document.getElementById("gplus-share").href="https://plus.google.com/share?url=" + UrlEncoded;
   document.getElementById("email-share").href="mailto:?body=Hey, out my instagram compilation! I made it with Velvi! \n " + Url;
   });

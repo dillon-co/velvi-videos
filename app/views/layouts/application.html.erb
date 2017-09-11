@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html prefix="og: http://ogp.me/ns/video#">
+
   <head>
     <title>VelviVideos</title>
     <%= csrf_meta_tags %>
-
+    <%= yield :meta %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
     <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,700|Montserrat:400,700" rel="stylesheet">
