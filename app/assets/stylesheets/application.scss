@@ -139,7 +139,7 @@ a:hover.email {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
-    @media(min-width:1000px){
+    @media(max-width:1000px){
       .main-login-button{
         width: 500px;
         height: 70px;
