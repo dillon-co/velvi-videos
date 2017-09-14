@@ -1,7 +1,7 @@
 <% content_for :meta do %>
-  <meta property="og:url"                content="<%= "#{Rails.root}/videos#{@video.id}" %>" />
-  <meta property="og:type"               content="video.other" />
-  <meta property="og:title"              content="<%= @video.title.split('-').first %> Instagram Compilation" />
+  <meta property="og:url" content="<%= "www.velvi.io/videos#{@video.id}" %>" />
+  <meta property="og:type" content="video.other" />
+  <meta property="og:title" content="<%= @video.title.split('-').first %> Instagram Compilation" />
   <meta property="og:video" content="<%= @video.music_url %>">
   <meta property="og:video:secure_url" content="<%= @video.music_url %>" />
   <meta property="og:video:type" content="application/x-shockwave-flash" />
