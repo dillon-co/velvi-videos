@@ -49,7 +49,7 @@
 
        FB.ui({
             method: 'share',
-            href: 'https://developers.facebook.com/docs/',
+            href: '<%= request.original_url %>',
         }, function(response){});
     </script>
 </html>
