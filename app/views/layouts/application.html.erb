@@ -51,5 +51,13 @@
             method: 'share',
             href: '<%= request.original_url %>',
         }, function(response){});
+
+        FB.ui({
+          method: 'share_open_graph',
+          action_type: 'og.likes',
+          action_properties: JSON.stringify({
+            object:'<%= request.original_url %>',
+          })
+        }, function(response){});
     </script>
 </html>
