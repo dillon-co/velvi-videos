@@ -24,6 +24,9 @@
 #  youtube_name           :string
 #  youtube_refresh_token  :string
 #  event_nick_name        :string
+#  sponsored              :boolean          default(FALSE)
+#  subscribed             :boolean          default(FALSE)
+#  num_followers          :integer
 #
 
 require 's3_store'
@@ -97,10 +100,28 @@ class User < ApplicationRecord
     save_and_resize(videos.first(15))
   end
 
-  def get_certain_videos_from_instagram(tag)
+  def get_posts_from_instagram
     i = open("https://api.instagram.com/v1/users/#{uid}/media/recent/?access_token=#{token}&count=40")
     client_attributes = OpenStruct.new(JSON.parse(i.read))
     data = JSON.parse(client_attributes.data.to_json)
+    return data
+  end
+
+  def get_basic_profile_data
+    i = open("https://api.instagram.com/v1/users/#{uid}?access_token=#{token}&count=40")
+    client_attributes = OpenStruct.new(JSON.parse(i.read))
+    data = JSON.parse(client_attributes.data.to_json)
+    return data
+  end
+
+  def get_num_followers
+    data = get_basic_profile_data
+    number_of_followers = data["counts"]["follows"]
+    self.update(num_followers: number_of_followers)
+  end
+
+  def get_certain_videos_from_instagram(tag)
+    data = get_data_from_instagram
     instagram_videos = data.select {|d| d if d["type"] == 'video'}
     carousels = data.select {|d| d if d['type'] == 'carousel'}
     carousels.each do |c|
@@ -267,6 +288,22 @@ class User < ApplicationRecord
     `#{c}`
   end
 
+  def self.update_all_followers
+    self.all.each do |u|
+      u.get_num_followers
+    end
+  end
+
+  def self.get_average_num_followers
+    arr_of_num_of_followers = self.all.map(&:num_followers)
+    sum_of_all_nums = arr_of_num_of_followers.inject(&:+)
+    puts sum_of_all_nums / self.count
+  end
+
+  def self.asdf
+    self.update_all_followers
+    self.get_average_num_followers
+  end
 
 
 

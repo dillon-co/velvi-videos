@@ -24,6 +24,9 @@
 #  youtube_name           :string
 #  youtube_refresh_token  :string
 #  event_nick_name        :string
+#  sponsored              :boolean          default(FALSE)
+#  subscribed             :boolean          default(FALSE)
+#  num_followers          :integer
 #
 
 require 'test_helper'
