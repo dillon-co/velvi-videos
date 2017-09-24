@@ -290,14 +290,19 @@ class User < ApplicationRecord
 
   def self.update_all_followers
     self.all.each do |u|
-      u.get_num_followers
+      begin
+        u.get_num_followers
+      rescue
+        next
+      end
     end
   end
 
   def self.get_average_num_followers
-    arr_of_num_of_followers = self.all.map(&:num_followers)
+    arr_of_num_of_followers = self.all.map{ |u| u.num_followers.present? ? u.num_followers :  nil }.compact
+    divider = arr_num_of_followers.length
     sum_of_all_nums = arr_of_num_of_followers.inject(&:+)
-    puts sum_of_all_nums / self.count
+    puts sum_of_all_nums / divider
   end
 
   def self.asdf
