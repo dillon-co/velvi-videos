@@ -134,26 +134,28 @@ class User < ApplicationRecord
 
   def save_and_resize(videos)
     if videos.length > 0
-      urls_titties_and_sizes = get_video_urls_titles_and_sizes(videos)
-      urls_titles_and_sizes = urls_titties_and_sizes.select {|obj| obj if obj[:video_url] != '' }
-      save_videos_to_folder(urls_titles_and_sizes)
-      resize_videos_with_padding(urls_titles_and_sizes)
+        urls_titties_and_sizes = get_video_urls_titles_and_sizes(videos)
+        urls_titles_and_sizes = urls_titties_and_sizes.select {|obj| obj if obj[:video_url] != '' }
+        save_videos_to_folder(urls_titles_and_sizes)
+        resize_videos_with_padding(urls_titles_and_sizes)
     else
       videos.last.update(done_editing: true, no_instagram_videos: true)
     end
   end
 
   def get_video_urls_titles_and_sizes(videos)
-    urls_titles_and_sizes = videos.map.with_index do |v, i|
+    urls_titles_and_sizes = []
+    Parallel.each_with_index(videos, in_threads: 15) do |v, i|
       v != nil ? vid_url = v['videos']['standard_resolution']['url'] : vid_url = ""
       v != nil ? wid = v['videos']['standard_resolution']['width'] : wid = '0'
       v != nil ? hei = v['videos']['standard_resolution']['height'] : hei = '0'
-      { name: "video#{i}",
-        video_url: vid_url,
-        size: { width: wid,
+      h = { name: "video#{i}",
+            video_url: vid_url,
+            size: { width: wid,
                 height: hei
               }
-      }
+            }
+      urls_titles_and_sizes << h
     end
     urls_titles_and_sizes
   end
@@ -172,7 +174,7 @@ class User < ApplicationRecord
   def resize_videos_with_padding(urls_titles_and_sizes)
     counter = 0
     batch_size = 4
-    urls_titles_and_sizes.each do |video|
+    Parallel.each(urls_titles_and_sizes, in_threads: 2) do |video|
       puts counter += 1
       video_path = "#{video_folder}/#{video[:name]}.mpeg"
       output_video = "#{video_folder}/output_#{video[:name]}.mpeg"
@@ -209,13 +211,13 @@ class User < ApplicationRecord
     vid = videos.last
     command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mpeg"
     `#{command}`
-    if vid.video_type == 'free'
-      puts "\n\n\nadding watermark\n\n\n"
-      add_watermark_to_video(vid.id)
-    else
-      c = "ffmpeg -i #{video_folder}/output#{vid.id}.mpeg -vcodec copy -acodec copy #{video_folder}/output#{vid.id}.mp4"
-      `#{c}`
-    end
+    # if vid.video_type == 'free'
+    #   puts "\n\n\nadding watermark\n\n\n"
+    #   add_watermark_to_video(vid.id)
+    # else
+    c = "ffmpeg -i #{video_folder}/output#{vid.id}.mpeg -vcodec copy -acodec copy #{video_folder}/output#{vid.id}.mp4"
+    `#{c}`
+    # end
     File.delete("#{video_folder}/output#{vid.id}.mpeg")
     puts "\n\n\nadding music\n\n\n"
     add_audio_to_video(vid.id)
@@ -258,8 +260,9 @@ class User < ApplicationRecord
 
   def add_watermark_to_video(video_id)
     # puts "skipping watermark for debugging"
-    watermark_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mp4"
-    `#{watermark_command}`
+    puts "skipping watermark for Speed"
+    # watermark_command = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{watermark} -filter_complex 'overlay=1:600' -y #{video_folder}/output#{video_id}.mp4"
+    # `#{watermark_command}`
   end
 
   def video_folder
