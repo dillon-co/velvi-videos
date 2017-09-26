@@ -235,7 +235,7 @@ class User < ApplicationRecord
   end
 
   def save_movies_to_bucket
-    videos = Dir.glob("#{video_folder}/*.mp4").each do |v|
+    videos = Dir.glob("#{video_folder}/*.mpeg").each do |v|
       puts "\n\n\n\n\ngrabbing video #{v}\n\n\n\n\n"
       s3_store = S3Store.new(v)
       s3_store.store
