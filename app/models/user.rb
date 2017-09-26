@@ -209,8 +209,8 @@ class User < ApplicationRecord
 
   def add_videos_together_with_music
     vid = videos.last
-    command = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mpeg"
-    `#{command}`
+    concat_all_videos = "ffmpeg -f concat -safe 0 -i #{video_folder}/movies.txt -c copy #{video_folder}/output#{vid.id}.mp4"
+    `#{concat_all_videos}`
     # if vid.video_type == 'free'
     #   puts "\n\n\nadding watermark\n\n\n"
     #   add_watermark_to_video(vid.id)
@@ -235,7 +235,7 @@ class User < ApplicationRecord
   end
 
   def save_movies_to_bucket
-    videos = Dir.glob("#{video_folder}/*.mpeg").each do |v|
+    videos = Dir.glob("#{video_folder}/*.mp4").each do |v|
       puts "\n\n\n\n\ngrabbing video #{v}\n\n\n\n\n"
       s3_store = S3Store.new(v)
       s3_store.store
@@ -247,6 +247,7 @@ class User < ApplicationRecord
   def save_type_of_video_url(video_string, s3_store_url)
     v = video_string.split("/").last.split(".").first
     if v.split(/\d+/).length > 1
+      puts "#{video_string}: #{s3_store_url}"
       #check if file being saved to db is a movie with a song in the background
       Video.find(v[/\d+/]).update(music_url: s3_store_url, done_editing: true)
     else
@@ -255,7 +256,7 @@ class User < ApplicationRecord
   end
 
   def add_audio_to_video(video_id)
-    c = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mpeg"
+    c = "ffmpeg -i #{video_folder}/output#{video_id}.mpeg -i #{audio_folder}/no_diggity.mp3 -c copy -map 0:0 -map 1:0 -shortest #{video_folder}/output#{video_id}audio.mp4"
     `#{c}`
   end
 
