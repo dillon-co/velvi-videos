@@ -163,7 +163,7 @@ class User < ApplicationRecord
   def save_videos_to_folder(videos)
     Parallel.each(videos, in_threads: 15) do |video|
       if video[:video_url] != ''
-        new_file_path = "#{video_folder}/#{video[:name]}.mpeg"
+        new_file_path = "#{video_folder}/#{video[:name]}.mp4"
         open(new_file_path, "wb") do |file|
           file.print open(video[:video_url]).read
         end
@@ -176,8 +176,8 @@ class User < ApplicationRecord
     batch_size = 4
     Parallel.each(urls_titles_and_sizes, in_threads: 2) do |video|
       puts counter += 1
-      video_path = "#{video_folder}/#{video[:name]}.mpeg"
-      output_video = "#{video_folder}/output_#{video[:name]}.mpeg"
+      video_path = "#{video_folder}/#{video[:name]}.mp4"
+      output_video = "#{video_folder}/output_#{video[:name]}.mp4"
       video_placement = calculate_padding_placement(video)
       run_size_and_padding_command = "ffmpeg -loglevel panic -i #{video_path} -vf 'scale=-1:640, pad=1138:640:#{video_placement}:0:black' #{output_video}"
       `#{run_size_and_padding_command}`
@@ -198,7 +198,7 @@ class User < ApplicationRecord
 
   def add_videos_to_text_file
     movie_file = open(movie_text_file, "wb")
-    Dir.glob("#{video_folder}/*.mpeg").each do |video|
+    Dir.glob("#{video_folder}/*.mp4").each do |video|
       if video.split('/').last.split('_').length > 1
         movie_file.write("file '#{video.split('/').last}'")
         movie_file.write("\n")
