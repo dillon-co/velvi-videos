@@ -61,6 +61,7 @@ class User < ApplicationRecord
   end
 
   def get_videos_and_add_them_together
+    videos.create(title: "Testing")
     create_video_dir
     puts "\n\n\nDownloading videos\n\n\n"
     get_videos_from_instagram
@@ -161,7 +162,7 @@ class User < ApplicationRecord
   end
 
   def save_videos_to_folder(videos)
-    videos.each do |video|
+    Parallel.each(videos, in_threads: 15) do |video|
       if video[:video_url] != ''
         new_file_path = "#{video_folder}/#{video[:name]}.mp4"
         open(new_file_path, "wb") do |file|
@@ -174,7 +175,7 @@ class User < ApplicationRecord
   def resize_videos_with_padding(urls_titles_and_sizes)
     counter = 0
     batch_size = 4
-    Parallel.each(urls_titles_and_sizes, in_threads: 2) do |video|
+    Parallel.each(urls_titles_and_sizes, in_threads: 15) do |video|
       puts counter += 1
       video_path = "#{video_folder}/#{video[:name]}.mp4"
       output_video = "#{video_folder}/output_#{video[:name]}.mp4"
@@ -225,7 +226,7 @@ class User < ApplicationRecord
   end
 
   def delete_videos
-    Dir.glob("#{video_folder}/*.mpeg").each do |video|
+    Dir.glob("#{video_folder}/*.mp4").each do |video|
       if video.split('/').last.split('_').length > 1
         File.delete(video)
       end
