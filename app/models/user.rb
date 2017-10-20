@@ -61,7 +61,6 @@ class User < ApplicationRecord
   end
 
   def get_videos_and_add_them_together
-    videos.create(title: "Testing")
     create_video_dir
     puts "\n\n\nDownloading videos\n\n\n"
     get_videos_from_instagram
