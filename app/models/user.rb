@@ -315,6 +315,8 @@ class User < ApplicationRecord
     self.get_average_num_followers
   end
 
+  
+
 
 
 ##########################################################

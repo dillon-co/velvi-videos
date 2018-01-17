@@ -1,3 +1,4 @@
+
 <% content_for :meta do %>
   <meta property="og:url" content="<%= "www.velvi.io/videos#{@video.id}" %>" />
   <meta property="og:type" content="video.other" />
@@ -116,3 +117,43 @@
   });
 
 </script>
+
+
+<SubmitLead xmlns="http://tempuri.org/">
+
+     <sGUID>YourGUIDHERE</sGUID>
+
+
+
+     <xml><![CDATA[<RootNode>
+
+   <Lead>
+
+       <Contact Name="rico2_21_5x"
+                Email="rico2_21_3@gmail.com"
+                Phone="6231112222"
+
+
+
+
+
+
+       />
+
+
+       />
+
+
+
+
+
+   </Lead>
+
+</RootNode>]]>
+
+</xml>
+
+  </SubmitLead>
+
+
+var xml  = "<rss version='1.0' encoding='UTF-8'?><SubmitLead xmlns='http://ssazure.net/westates/svceleads/eleads.asmx?WSDL'><xml><<RootNode><Lead><Contact Name="+name+"Email="+email+"Phone="+phone+"Subject="+subject+"Message="+message+"/><sGUID>DE18C1D5-0707-4E52-B5D4-52EB02836B2B</sGUID></RootNode></xml></SubmitLead>";
