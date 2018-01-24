@@ -2,7 +2,7 @@ class S3Store
   def initialize(file)
     @file = file
     @s3 = Aws::S3::Resource.new
-    @bucket = @s3.bucket('velvi-video-bucket')
+    @bucket = @s3.bucket('velvi-videos')
   end
 
   def store
