@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
+  resources :raffle_emails
   resources :events
   mount Sidekiq::Web => '/sidekiq'
 
-  root to: 'pages#landing'
+  root to: 'pages#landing_page_drawing'
 
   post 'stripe_checkout' => 'subscriptions#stripe_checkout', as: :stripe_checkout
 
@@ -16,6 +17,8 @@ Rails.application.routes.draw do
   resources :videos
 
   resources :charges
+
+  get "this_is_so_cool" => 'raffle_emails#raffle_share', as: :raffle_share
 
   get 'color_fun' => 'pages#color_fun', as: :color_fun_path
   # get 'charges/create' => 'charges#create', as: :create_new_charge

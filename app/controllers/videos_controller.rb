@@ -2,6 +2,7 @@ class VideosController < ApplicationController
   ## TODO Make a modal for loading screen
   ## add bootstrap
   def new
+    session[:vid_id] = nil
   end
 
   def show

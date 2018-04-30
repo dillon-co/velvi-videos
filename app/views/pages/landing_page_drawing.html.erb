@@ -1,0 +1,185 @@
+    <div class="center-logo">
+      <%= image_tag "black_logo.png", size: '200x225' %>
+      <br>
+      <h3 class="mb-5 asbf">Art Should Be Fun.</h3>
+
+    </div>
+    <header class="masthead">
+      <div class="over-lay h-100">
+
+      <div class="container h-100">
+        <div class="row h-100">
+          <div class="col-lg-7 my-auto">
+            <div class=" mx-auto">
+              <!-- <h2>That's why we built an A.I. to help you edit videos</h2> -->
+              <h1>A.I. For Video Editing</h1>
+              <!-- <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">GoPro Hero 5 Giveaway</a> -->
+            </div>
+          </div>
+          <div class="col-lg-5 my-auto">
+            <div class="device-container">
+              <div class="device-mockup iphone6_plus portrait white">
+                <div class="device">
+                  <div class="screen">
+                    <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
+                    <!-- <%= image_tag('app/assets/images/adult-beard-blur.jpg') %> -->
+                    <img src="adult-beard-blur.jpg" class="img-fluid" alt="">
+                  </div>
+                  <div class="button">
+                    <!-- You can hook the "home button" to some JavaScript events or just remove it -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </header>
+
+    <section class="download bg-primary text-center" id="download">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8 mx-auto">
+            <h2 class="section-heading">Why Is Everyone So Excited?</h2>
+            <h4>Because Our A.I. helps you edit your videos 100x faster, while letting you add your own style and creative expression</h4>
+            <div class="badges">
+              <!-- <a class="badge-link" href="#"></a>
+              <a class="badge-link" href="#"></a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features card" id="features">
+      <div class="container " id='signup-form'>
+        <div class="section-heading text-center">
+          <h1>Learn When We Launch Our Kickstarter!</h1>
+          <h4 class="">And Win A GoPro!</h4>
+        </div>
+          <div class="container main-email-form" >
+              <%= form_for @raffle_email do |f| %>
+              <div class="row">
+                <div class="col-lg-3">
+
+                </div>
+                <div class="col-lg-2">
+                  <!-- <%#= f.label :name %><br> -->
+                  <h4>Name</h4>
+                  <%= f.text_field :name %>
+                </div>
+                <div class="col-lg-3">
+                  <!-- <%#= f.label :email %><br> -->
+                  <h4>Email</h4>
+                  <%= f.text_field :email %>
+                </div>
+                <div class="col-lg-1">
+                  <br>
+                  <%= f.submit "Notify Me", class: 'btn btn-primary' %>
+                </div>
+              </div>
+
+              <% if flash[:alert] %>
+                <div class="notice text-center">
+                  <h5> <%= flash[:alert] %></h5>
+                </div>
+              <% end %>
+
+              <% end %>
+          </div>
+          <hr>
+        <!-- <div class="row">
+          <div class="col-lg-4 my-auto">
+            <div class="device-container">
+              <div class="device-mockup iphone6_plus portrait white">
+                <div class="device">
+                  <div class="screen">
+                    <img src="img/demo-screen-1.jpg" class="img-fluid" alt="">
+                  </div>
+                  <div class="button">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 my-auto">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="feature-item">
+                    <i class="icon-screen-smartphone text-primary"></i>
+                    <h3>Device Mockups</h3>
+                    <p class="text-muted">Ready to use HTML/CSS device mockups, no Photoshop required!</p>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="feature-item">
+                    <i class="icon-camera text-primary"></i>
+                    <h3>Flexible Use</h3>
+                    <p class="text-muted">Put an image, video, animation, or anything else in the screen!</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="feature-item">
+                    <i class="icon-present text-primary"></i>
+                    <h3>Free to Use</h3>
+                    <p class="text-muted">As always, this theme is free to download and use for any purpose!</p>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="feature-item">
+                    <i class="icon-lock-open text-primary"></i>
+                    <h3>Open Source</h3>
+                    <p class="text-muted">Since this theme is MIT licensed, you can use it commercially!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="over-lay">
+        <div class="container">
+
+          <div class="cta-content">
+            <div class="container">
+              <h2><br><strong>Be The First To Know.</strong></h2>
+              <!-- <a href="#contact" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <section class="contact bg-primary" id="contact">
+      <div class="container">
+
+        <ul class="list-inline list-social">
+          <li class="list-inline-item social-twitter">
+            <a href="#">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-facebook">
+            <a href="#">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li class="list-inline-item social-google-plus">
+            <a href="#">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section> -->
+
+
+
+    <!-- Bootstrap core JavaScript -->
