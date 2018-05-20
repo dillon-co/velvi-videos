@@ -17,11 +17,7 @@ gem 'instagram'
 gem 'aws-sdk', '~> 2.0'
 gem 'stripe'
 
-gem 'videojs-ng'
-# gem 'bitmovin-player-rails'
-gem 'videojs_rails'
 
-gem 'yt', '~> 0.28.0'
 
 gem 'sidekiq'
 gem "sidekiq-cron", "~> 0.4.0"
