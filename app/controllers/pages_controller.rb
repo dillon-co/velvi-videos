@@ -6,6 +6,7 @@ class PagesController < ApplicationController
   end
 
   def landing_page_drawing
+    response.headers["X-FRAME-OPTIONS"] = "ALLOW-FROM https://www.youtube.com"
     @raffle_email = RaffleEmail.new
   end
 

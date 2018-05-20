@@ -1,7 +1,8 @@
     <div class="center-logo">
-      <%= image_tag "black_logo.png", size: '200x225' %>
-      <br>
-      <h3 class="mb-5 asbf">Art Should Be Fun.</h3>
+      <%#= image_tag "Brain\ Black.png", size: '400x450' %>
+      <%= image_tag "Brain.png", size: '450x450' %>
+      <h1 class="mb-5 asbf">Art Should Be Fun.</h1>
+      <%= link_to "Learn More", "#{root_path}#explainer-video", class: 'btn btn-outline' %>
 
     </div>
     <header class="masthead">
@@ -13,6 +14,7 @@
             <div class=" mx-auto">
               <!-- <h2>That's why we built an A.I. to help you edit videos</h2> -->
               <h1>A.I. For Video Editing</h1>
+              <%= link_to "Learn More", "#{root_path}#explainer-video", class: 'btn btn-outline' %>
               <!-- <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">GoPro Hero 5 Giveaway</a> -->
             </div>
           </div>
@@ -23,7 +25,7 @@
                   <div class="screen">
                     <!-- Demo image for screen mockup, you can put an image here, some HTML, an animation, video, or anything else! -->
                     <!-- <%= image_tag('app/assets/images/adult-beard-blur.jpg') %> -->
-                    <img src="adult-beard-blur.jpg" class="img-fluid" alt="">
+                    <!-- <img src="adult-beard-blur.jpg" class="img-fluid" alt=""> -->
                   </div>
                   <div class="button">
                     <!-- You can hook the "home button" to some JavaScript events or just remove it -->
@@ -36,27 +38,17 @@
       </div>
       </div>
     </header>
-
-    <section class="download bg-primary text-center" id="download">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8 mx-auto">
-            <h2 class="section-heading">Why Is Everyone So Excited?</h2>
-            <h4>Because Our A.I. helps you edit your videos 100x faster, while letting you add your own style and creative expression</h4>
-            <div class="badges">
-              <!-- <a class="badge-link" href="#"></a>
-              <a class="badge-link" href="#"></a> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<div class="video" id='explainer-video'>
+  <h1>Watch The Explainer Video!</h1>
+  <div class='embed-div'>
+        <%= content_tag(:iframe, nil, src: "http://www.youtube.com/embed/CmG6JznfmZw", class:['embed-container']) %>
+  </div>
+</div>
 
     <section class="features card" id="features">
       <div class="container " id='signup-form'>
         <div class="section-heading text-center">
           <h1>Learn When We Launch Our Kickstarter!</h1>
-          <h4 class="">And Win A GoPro!</h4>
         </div>
           <div class="container main-email-form" >
               <%= form_for @raffle_email do |f| %>
@@ -76,7 +68,7 @@
                 </div>
                 <div class="col-lg-1">
                   <br>
-                  <%= f.submit "Notify Me", class: 'btn btn-primary' %>
+                  <%= f.submit "Keep In Touch", class: 'btn btn-primary' %>
                 </div>
               </div>
 
@@ -150,6 +142,7 @@
           <div class="cta-content">
             <div class="container">
               <h2><br><strong>Be The First To Know.</strong></h2>
+              <%= link_to "Keep Me Updated!", "#{root_path}#signup-form", class:'btn btn-outline' %>
               <!-- <a href="#contact" class="btn btn-outline btn-xl js-scroll-trigger">Let's Get Started!</a> -->
             </div>
           </div>
@@ -183,3 +176,23 @@
 
 
     <!-- Bootstrap core JavaScript -->
+
+
+
+    <!-- <source src="https://youtu.be/CmG6JznfmZw" type="video/youtube"> -->
+
+
+    <!-- <section class="download bg-primary text-center" id="download">
+    <div class="container">
+    <div class="row">
+    <div class="col-md-8 mx-auto">
+    <h2 class="section-heading">Why Is Everyone So Excited?</h2>
+    <h4>Because Our A.I. helps you edit your videos 100x faster, while letting you add your own style and creative expression</h4>
+    <div class="badges">
+    <!-- <a class="badge-link" href="#"></a>
+    <a class="badge-link" href="#"></a>
+  </div>
+</div>
+</div>
+</div>
+</section> -->

@@ -294,6 +294,8 @@ GEM
       unf_ext
     unf (0.1.4-java)
     unf_ext (0.0.7.2)
+    videojs-ng (6.2.7)
+    videojs_rails (4.12.15)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.4.0)
@@ -344,6 +346,8 @@ DEPENDENCIES
   stripe
   tzinfo-data
   uglifier (>= 1.3.0)
+  videojs-ng
+  videojs_rails
   web-console (>= 3.3.0)
   yt (~> 0.28.0)
 
