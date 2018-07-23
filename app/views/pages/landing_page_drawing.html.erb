@@ -2,8 +2,14 @@
       <%#= image_tag "Brain\ Black.png", size: '400x450' %>
       <%= image_tag "Brain.png", size: '450x450' %>
       <h1 class="mb-5 asbf">Art Should Be Fun.</h1>
-      <%= link_to "Learn More", "#{root_path}#explainer-video", class: 'btn btn-outline' %>
-
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <%= link_to "Learn More", "#{root_path}#explainer-video", class: 'btn btn-outline' %>
+          <%= link_to "Try the demo", demo_path, class: 'btn btn-outline' %>
+        </div>
+        <div class="col-md-4"></div>
+      </div>
     </div>
     <header class="masthead">
       <div class="over-lay h-100">
@@ -14,7 +20,10 @@
             <div class=" mx-auto">
               <!-- <h2>That's why we built an A.I. to help you edit videos</h2> -->
               <h1>A.I. For Video Editing</h1>
-              <%= link_to "Learn More", "#{root_path}#explainer-video", class: 'btn btn-outline' %>
+              <div class="row">
+                <%= link_to "Learn More", "#{root_path}#explainer-video", class: 'btn btn-outline' %>
+                <%= link_to "Try the demo", demo_path, class: 'btn btn-outline' %>
+              </div>
               <!-- <a href="#download" class="btn btn-outline btn-xl js-scroll-trigger">GoPro Hero 5 Giveaway</a> -->
             </div>
           </div>

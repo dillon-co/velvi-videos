@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   root to: 'pages#landing_page_drawing'
 
+  get 'coolest_demo_ever' => 'pages#landing', as: :demo
+
   post 'stripe_checkout' => 'subscriptions#stripe_checkout', as: :stripe_checkout
 
   get 'subscriptions/plans'
