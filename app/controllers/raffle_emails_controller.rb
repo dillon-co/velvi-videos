@@ -5,7 +5,7 @@ class RaffleEmailsController < ApplicationController
       if RaffleEmail.find_by(email: raffle_email.email) == nil
         if raffle_email.save
           redirect_to raffle_share_path
-        end    
+        end
       else
         flash[:alert] = "Looks like that email was already taken!"
         redirect_to root_path(anchor: 'signup-form')
@@ -18,6 +18,11 @@ class RaffleEmailsController < ApplicationController
 
   def raffle_share
   end
+
+  # def welcome_email
+  #   AWSMailer.welcome_email(name: params[:name], email:params[:email]).deliver
+  #   redirect_to raffle_share_path
+  # end
 
   private
 

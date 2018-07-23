@@ -12,8 +12,10 @@ class VideosController < ApplicationController
 
   def index
     puts session[:vid_id]
-    if current_user.videos.present?
-      @videos = current_user.videos.all
+    if user_signed_in?
+      if current_user.videos.present?
+        @videos = current_user.videos.all
+      end
     end
   end
 

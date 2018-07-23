@@ -20,6 +20,8 @@ Rails.application.routes.draw do
 
   get "this_is_so_cool" => 'raffle_emails#raffle_share', as: :raffle_share
 
+  post "welcome_email", to: 'raffle_emails#welcome_email', as: :welcome_email
+
   get 'color_fun' => 'pages#color_fun', as: :color_fun_path
   # get 'charges/create' => 'charges#create', as: :create_new_charge
 
